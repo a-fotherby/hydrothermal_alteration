@@ -2,3 +2,6 @@
 *.tec
 *.out
 *.rst
+
+# Fig script outputs
+*.png
