@@ -5,3 +5,6 @@
 
 # Fig script outputs
 *.png
+
+# Ignore IDE files
+.idea/
