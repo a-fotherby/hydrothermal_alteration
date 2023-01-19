@@ -4,7 +4,7 @@ END
  
 RUNTIME
 time_units                   years
-timestep_max                 1e-2
+timestep_max                 0.1
 timestep_init                1e-10
 time_tolerance               0.1
 correction_max               5.0
@@ -17,8 +17,8 @@ gimrt                        true
 master                       H+
 database                     CrunchThermoddem.dbs
 graphics                     tecplot
-restart                      burn.rst append
-save_restart                 burn2.rst
+restart                      burn2.rst append
+save_restart                 burn3.rst
 END
 
 DISCRETIZATION
@@ -28,7 +28,7 @@ END
 
 OUTPUT
 time_units                   years
-spatial_profile              15 20 25 30
+spatial_profile              35 40 45 50 55 60 65 70 75 80 85 90 95 100
 END
 
 CONDITION                    Initial
