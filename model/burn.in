@@ -28,32 +28,32 @@ END
 
 OUTPUT
 time_units                   years
-spatial_profile              1e-1 5 10 15 20 25 30 35 40 45 50 55
+spatial_profile              1e-1 5 10
 END
 
 CONDITION                    Initial
-! Calculated by equilibratiting pure water with CIPW-norm equivalent NMORB for 10Mya.
-pH                           10
-HCO3-                        1e-10
-Mg++                         6.5e-5
-Al+++                        7.4e-5
-Fe++                         5.6e-7
-Fe+++                        1.0e-10
-Ca++                         3.1e-5
-SO4--                        1.0e-10
+!Seawater
+pH                           8.15  
+HCO3-                        2.4E-3
+Mg++                         0.0528
+Al+++                        0.037e-6   
+Fe++                         2.600e-8
+Fe+++                        1.000e-14
+Ca++                         0.0103
+SO4--                        0.0282
 Cl-                          charge
-Na+                          3.7e-7
-K+                           6.6e-7
-H4SiO4(aq)                   1.8e-4
-!NH4+                        1.480e-09
+Na+                          4.740e-01
+K+                           1.200e-02
+H4SiO4(aq)                   0.17e-3
+!NH4+                         1.480e-09
 
-!Trace elements
+! Trace elements
 O2(aq)                       1.0e-15
-F-                           2.7-8
-HPO4--                       8.0e-8
+F-                           6.8E-5
+HPO4--                       1.700e-06
 HS-                          1.0E-10
-NO3-                         1.0e-10
-Ti(OH)4(aq)                  1.2e-10
+NO3-                         3.9e-5
+Ti(OH)4(aq)                  2.09E-9
 
 ! SOLID PHASE
 !porosity = 0.1, total solid phase = 0.9
