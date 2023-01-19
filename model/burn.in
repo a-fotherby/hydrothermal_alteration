@@ -79,41 +79,41 @@ Ilmenite                     0.020
 
 Fluorapatite(Natur)          0.004
 
-Brucite                      1.0E-10
+Brucite                      1.0E-10        ssa 1.0
 
 !serpentine
-Lizardite                    1.0E-10   
-Chrysotile                   1.0E-10  
-Talc                         1.0E-10 
-Hydrotalcite                 1.0E-10
+Lizardite                    1.0E-10        ssa 1.0   
+Chrysotile                   1.0E-10        ssa 1.0  
+Talc                         1.0E-10        ssa 1.0 
+Hydrotalcite                 1.0E-10        ssa 1.0
 
-!Hematite                     1.0E-10   
+!Hematite                     1.0E-10       ssa 1.0
 
-Quartz(alpha)                1.0E-10   
+Quartz(alpha)                1.0E-10        ssa 1.0   
 
 !smectites
 !important clays
-Hsaponite(Mg)                 1.0E-10   
-Hsaponite(Ca)                 1.0E-10   
-Hsaponite(Na)                 1.0E-10   
-Celadonite                    1.0e-10   
+Hsaponite(Mg)                1.0E-10        ssa 1.0
+Hsaponite(Ca)                1.0E-10        ssa 1.0   
+Hsaponite(Na)                1.0E-10        ssa 1.0   
+Celadonite                   1.0e-10        ssa 1.0   
 
 !Chlorites
-Chamosite(Daphnite)           1.0e-10
-Clinochlore                   1.0e-10
+Chamosite(Daphnite)          1.0e-10        ssa 1.0
+Clinochlore                  1.0e-10        ssa 1.0
 
 !Na-Zeolites
-Natrolite                     1.0e-10    
+Natrolite                    1.0e-10        ssa 1.0
 
-FeS(am)                        1.0e-10    
+FeS(am)                      1.0e-10        ssa 1.0
 
 !sulphates
-Anhydrite                    1.0E-10  
-Gypsum                       1.0E-10  
-MgSO4                        1.0E-10  
+Anhydrite                    1.0E-10        ssa 1.0  
+Gypsum                       1.0E-10        ssa 1.0  
+MgSO4                        1.0E-10        ssa 1.0  
 
-Calcite                      1.0E-10   
-!Siderite                     1.0E-10   
+Calcite                      1.0E-10        ssa 1.0   
+!Siderite                     1.0E-10        ssa 1.0
 END
 
 CONDITION                    Boundary
@@ -232,8 +232,8 @@ SECONDARY_SPECIES
 HNO3(aq)
 Al(OH)2+                                                                
 !Al(SO4)2-
-!AlO2-                                                                   
-!AlOH++
+AlO2-                                                                   
+AlOH++
 CO3--  
 CO2(aq)                                                                  
 CaCl+                                                                
@@ -282,7 +282,7 @@ END
 
 TEMPERATURE
 set_temperature          2.0
-read_temperaturefile     temp_profile.txt
+read_temperaturefile     on_axis_temp.txt
 END
 
 TRANSPORT
