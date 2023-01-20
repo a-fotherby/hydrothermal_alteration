@@ -2,6 +2,7 @@
 *.tec
 *.out
 *.rst
+fort.123
 
 # Fig script outputs
 *.png
