@@ -9,3 +9,6 @@ fort.123
 
 # Ignore IDE files
 .idea/
+
+.DS_store
+.ipynb_checkpoints/
