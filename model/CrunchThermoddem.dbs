@@ -1887,21 +1887,21 @@ Alamosite
 +----------------------------------------------------
 Albite(low)
   label = default
-  type = tst
+  type = DissolutionOnly
   rate(25C) = -3.00
   activation = 0.0  (kcal / mole)
   dependence :
 +----------------------------------------------------
 Albite(low)
   label = h+
-  type = tst
+  type = DissolutionOnly
   rate(25C) = -10.16
   activation = 15.54  (kcal / mole)
   dependence : H+ 0.457
 +----------------------------------------------------
 Albite(low)
   label = oh-
-  type = tst
+  type = DissolutionOnly
   rate(25C) = -15.60
   activation = 16.97  (kcal / mole)
   dependence : H+ -0.572
@@ -7028,7 +7028,7 @@ Actinolite
   type = tst
   rate(25C) = -11.11
   activation = 21.03  (kcal / mole)
-  dependence :
+  dependence : H+ 0.5
 +----------------------------------------------------
 Zn(OH)2_e
   label = default
