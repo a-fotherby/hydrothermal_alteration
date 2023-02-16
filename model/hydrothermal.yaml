@@ -5,101 +5,49 @@ aqueous_database:
 catabolic_pathways:
 
 # Timeout in seconds for any one input file.
-timeout: 86400
+timeout: 216000
 # conditions must match geochemical condition names in concentration dict
 conditions:
-    - 'Initial'
     - 'Boundary'
 # Number of files in this run.
-number_of_files: 30
+number_of_files: 29
 
-nodes: 40
+nodes: 30
 
 # Options for setting parameters:
 #     linspace
 #     random_uniform
 #     constant
 #     custom
-mineral_rates:
-
-  #Forsterite:                   
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  #Fayalite:
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  #Microcline:
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  #Enstatite(alpha):
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  #Ferrosilite(alpha):
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  #Diopside:
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  #Anorthite:
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  #Albite(low):
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  #Ilmenite:
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  #Fluorapatite(Natur):
-  #  - 'random_uniform'
-  #  - [-18, -15]
-  Brucite:
-    - 'linspace'
-    - [-11, -8, 1]
-  Lizardite:
-    - 'linspace'
-    - [-11, -8, 1]
-  Chrysotile:
-    - 'linspace'
-    - [-11, -8, 1]
-  Talc:
-    - 'linspace'
-    - [-11, -8, 1]
-  Hydrotalcite:
-    - 'linspace'
-    - [-11, -8, 1]
-  Hsaponite(Mg):
-    - 'linspace'
-    - [-11, -8, 1]
-  Hsaponite(Ca):
-    - 'linspace'
-    - [-11, -8, 1]
-  Hsaponite(Na):
-    - 'linspace'
-    - [-11, -8, 1]
-  Clinochlore:
-    - 'linspace'
-    - [-11, -8, 1]
-  Chamosite(Daphnite):
-    - 'linspace'
-    - [-11, -8, 1]
-  Celadonite:
-    - 'linspace'
-    - [-11, -8, 1]
-  Natrolite:
-    - 'linspace'
-    - [-11, -8, 1]
-  FeS(am):
-    - 'linspace'
-    - [-11, -8, 1]
-  Anhydrite:
-    - 'linspace'
-    - [-11, -8, 1]
-  Gypsum:
-    - 'linspace'
-    - [-11, -8, 1]
-  MgSO4:
-    - 'linspace'
-    - [-11, -8, 1]
-  Calcite:
-    - 'linspace'
-    - [-11, -8, 1]
+parameters:
+  Boundary:
+    pH:
+      - 'custom'
+      - [ 8.15,  8.15,  8.15,  8.15,  8.15,  8.15,  8.15,  8.15,  8.15,
+        8.15,  8.15,  8.15,  8.15,  8.15,  8.15,  8.15,  8.15,  8.15,
+        8.15,  8.15,  4.  ,  5.  ,  6.  ,  7.  ,  8.  ,  9.  , 10.  ,
+       11.  , 12.  ] 
+concentrations:
+        Boundary:
+                Mg++:
+                        - 'custom'
+                        - [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.05, 0.05, 0.05, 0.05, 0.05,
+       0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05,
+       0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+                Ca++:
+                        - 'custom'
+                        - [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.03, 0.04, 0.01,
+       0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01,
+       0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+                SO4--:
+                        - 'custom'
+                        - [0.03 , 0.03 , 0.03 , 0.03 , 0.03 , 0.03 , 0.03 , 0.03 , 0.03 ,
+       0.03 , 0.001, 0.01 , 0.02 , 0.03 , 0.04 , 0.03 , 0.03 , 0.03 ,
+       0.03 , 0.03 , 0.03 , 0.03 , 0.03 , 0.03 , 0.03 , 0.03 , 0.03 ,
+       0.03 , 0.03 ]
+                HCO3-:
+                        - 'custom'
+                        - [0.0024, 0.0024, 0.0024, 0.0024, 0.0024, 0.0024, 0.0024, 0.0024,
+       0.0024, 0.0024, 0.0024, 0.0024, 0.0024, 0.0024, 0.0024, 0.002 ,
+       0.0022, 0.0024, 0.0026, 0.0028, 0.0024, 0.0024, 0.0024, 0.0024,
+       0.0024, 0.0024, 0.0024, 0.0024, 0.0024]
