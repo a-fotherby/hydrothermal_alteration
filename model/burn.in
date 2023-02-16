@@ -1,7 +1,7 @@
-TITLE 
+TITLE
 Hydrothermal Fluid Flow in a 1D model
 END
- 
+
 RUNTIME
 time_units                   years
 timestep_max                 10
@@ -49,12 +49,8 @@ Fe+++                        1.0e-6
 Fe++                         1.0e-12
 
 O2(aq)                       1.0e-15
-!NH4+                         1.480e-09
-!SiO2(aq)                     0.17E-3
-!HPO4--                       1.700e-06
-HS-                          1.0E-10
-!H2S(aq)                      1.000e-5
-NO3-                         3.9e-5
+!HS-                          1.0E-10
+!NO3-                         3.9e-5
 H4SiO4(aq)                   0.17
 Ti(OH)4(aq)                  2.09E-6
 
@@ -79,8 +75,6 @@ Anorthite                    0.258            ssa 1e-10
 Albite(low)                  0.258            ssa 1e-10
 
 Ilmenite                     0.020            ssa 1e-10
-
-!Fluorapatite(Natur)          0.004            ssa 1e-10
 
 !! Secondary minerals
 
@@ -115,7 +109,7 @@ Clinochlore                  1.0e-10        ssa 2e-10
 Natrolite                    1.0e-10        ssa 2e-10
 
 !Pyrite
-FeS(am)                      1.0e-10        ssa 2e-10
+!FeS(am)                      1.0e-10        ssa 2e-10
 
 !Sulphates
 Anhydrite                    1.0E-10        ssa 2e-10  
@@ -137,18 +131,13 @@ SO4--                        28.2
 Ca++                         10.3
 K+                           10.2
 HCO3-                        2.06
-!F-                           6.8E-5
 Al+++                        0.037e-6   
 Fe+++                        1.0e-6
 Fe++                         1.0e-12
 
 O2(aq)                       1.0e-15
-!NH4+                         1.480e-09
-!SiO2(aq)                     0.17E-3
-!HPO4--                       1.700e-06
-HS-                          1.0E-10
-!H2S(aq)                      1.000e-5
-NO3-                         3.9e-5
+!HS-                          1.0E-10
+!NO3-                         3.9e-5
 H4SiO4(aq)                   0.17
 Ti(OH)4(aq)                  2.09E-6
 END
@@ -185,7 +174,6 @@ Albite(low)                  -label oh-
 Ilmenite                     -rate -14.60   -activation 15.82
 
 !Phosphate
-!Fluorapatite(Natur)          -rate -8       -activation 59.75
 
 
 !! Secondary minerals
@@ -230,7 +218,7 @@ Clinochlore                  -label h+
 Natrolite                    -rate -12.52   -activation 21.03
 
 !Pyrite
-FeS(am)                      -rate -8.0   -activation 11.95
+!FeS(am)                      -rate -8.0   -activation 11.95
 
 !sulphates
 Anhydrite                    -rate -6.5   -activation 6.69
@@ -258,19 +246,17 @@ Fe++
 Fe+++
 HCO3-  
 Cl-
-!F-
 K+
-HS-  
+!HS-  
 Na+
 SO4--
-!HPO4-- 
-NO3-
+!NO3
 H4SiO4(aq)
 Ti(OH)4(aq)
 END
  
 SECONDARY_SPECIES 
-HNO3(aq)
+!HNO3(aq)
 Al(OH)2+                                                                
 !Al(SO4)2-
 AlO2-                                                                   
@@ -289,19 +275,15 @@ OH-
 MgSO4(aq)
 MgCO3(aq)
 
-H2S(aq)
-!H2PO4- 
-!H3PO4(aq)
+!H2S(aq)
 HSO4-                                                                   
 HSiO3-                                                                  
 KCl(aq)                                                                 
 KOH(aq)                                                                 
 KSO4-                                                            
-NH3(aq)
 NaOH(aq)                                                                
 NaSO4-
 H2(aq)                                                                 
-!PO4---                                                                  
 END
 
 GASES
