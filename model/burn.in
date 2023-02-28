@@ -18,7 +18,8 @@ master                       H+
 database                     CrunchThermoddem.dbs
 graphics                     tecplot
 save_restart                 burn.rst
-later_inputfiles             burn2.in burn3.in burn4.in burn5.in burn6.in burn7.in burn8.in
+later_inputfiles             burn2.in burn3.in burn4.in burn5.in burn6.in burn7.in burn8.in burn9.in burn10.in &
+                             burn11.in burn12.in burn13.in burn14.in burn15.in burn16.in burn17.in burn18.in
 END
 
 DISCRETIZATION
@@ -223,7 +224,8 @@ Natrolite                    -rate -12.52   -activation 21.03
 !sulphates
 Anhydrite                    -rate -6.5   -activation 6.69
 
-Calcite                      -rate -6.5  -activation 6.69
+Calcite                      -rate -6.74  -activation 15.77
+Calcite                      -label hco3-
 !Siderite                     -rate -9.5 
 END
 

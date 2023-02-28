@@ -2716,7 +2716,16 @@ Calcite
   type = tst
   rate(25C) = -3.00
   activation = 0.0  (kcal / mole)
-  dependence :
+  dependence : 
+  AffinityDependence = 2.00 0.5 1.00
++----------------------------------------------------
+Calcite
+  label = hco3-
+  type = tst
+  rate(25C) = -2.72
+  activation = 16.01  (kcal / mole)
+  dependence : HCO3- 1.63
+  AffinityDependence = 2.00 0.5 1.00
 +----------------------------------------------------
 Calomel
   label = default
