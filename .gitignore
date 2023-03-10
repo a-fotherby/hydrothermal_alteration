@@ -3,7 +3,7 @@
 *.out
 *.rst
 fort.123
-
+fort.3
 # Fig script outputs
 *.png
 
