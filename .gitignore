@@ -4,6 +4,13 @@
 *.rst
 fort.123
 fort.3
+
+# Rhea files
+*.sh.*
+run*/
+*.log
+
+
 # Fig script outputs
 *.png
 
