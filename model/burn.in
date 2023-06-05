@@ -18,7 +18,7 @@ master                       H+
 database                     CrunchThermoddem.dbs
 graphics                     tecplot
 save_restart                 burn.rst
-later_inputfiles             burn2.in burn3.in burn4.in burn5.in burn6.in burn7.in burn8.in burn9.in burn10.in burn11.in 
+later_inputfiles             burn_2.in burn_3.in burn_4.in burn_5.in burn_6.in burn_7.in burn_8.in burn_9.in
 END
 
 DISCRETIZATION
