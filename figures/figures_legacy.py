@@ -26,47 +26,31 @@ def font_properties():
 
     font_props = FontProperties()
     # font_props.set_name('sans_serif')
-    font_props.set_size(28)
+    font_props.set_size(15)
     font_props.set_weight('bold')
 
     return font_props
 
 
-def synthetic_vars_ben_mins(data):
+def synthetic_vars(data):
     clays = ['Hsaponite(Mg)', 'Clinochlore', 'Chamosite(Daph', 'Celadonite']
-    basalt = ['Forsterite', 'Fayalite', 'Diopside', 'Hedenbergite', 'Anorthite', 'Albite(low)']
+    basalt = ['Forsterite', 'Fayalite', 'Microcline', 'Ferrosilite(al', 'Enstatite(alph', 'Diopside', 'Anorthite',
+              'Albite(low)', 'Ilmenite']
     serp = ['Chrysotile', 'Talc']
     amph = ['Actinolite', 'Tremolite']
     epidote = ['Epidote', 'Clinozoisite']
-    calcite_components = ('Ca++', 'HCO3-')
+    calcite_components = ['Ca++', 'HCO3-']
 
     min_groups = [clays, basalt, serp, amph, epidote]
     group_names = ['Clays', 'Basalt', 'serp', 'amph', 'epidote']
 
     for group, name in zip(min_groups, group_names):
-        ds2 = sum(data['volume'][var] for var in group)
-        data['volume'] = data['volume'].assign({name: ds2})
+        for file in set1:
+            plots.sum_vars(set1[file], 'volume', group, name)
+            plots.sum_vars(set1[file], 'rate', group, name)
 
-    return data
-
-
-def synthetic_vars(data):
-    clays = ('Hsaponite(Mg)', 'Clinochlore', 'Chamosite(Daph', 'Celadonite')
-    basalt = ('Forsterite', 'Fayalite', 'Microcline', 'Ferrosilite(al', 'Enstatite(alph', 'Diopside', 'Anorthite',
-              'Albite(low)', 'Ilmenite')
-    serp = ('Chrysotile', 'Talc')
-    amph = ('Actinolite', 'Tremolite')
-    epidote = ('Epidote', 'Clinozoisite')
-    calcite_components = ('Ca++', 'HCO3-')
-
-    min_groups = [clays, basalt, serp, amph, epidote]
-    group_names = ['Clays', 'Basalt', 'serp', 'amph', 'epidote']
-
-    for group, name in zip(min_groups, group_names):
-        ds2 = sum(data['volume'][var] for var in group)
-        data['volume'] = data['volume'].assign({name: ds2})
-
-    return data
+    for file in set1:
+        plots.prod_vars(set1[file], 'totcon', calcite_components, 'CaDIC')
 
 
 def s_moles_to_flux(x):
@@ -91,6 +75,7 @@ def s_flux_to_moles(x):
     mor_length = 65000e3  # m
     spread_rate = 40e-3  # m/yr
     mm_sulfur = 32.06  # g/mol
+
 
     conversion = spread_rate * mor_length / 1e12
     return x / conversion
@@ -118,29 +103,28 @@ def c_flux_to_moles(x):
 
 if __name__ == '__main__':
     import argparse
-
     parser = argparse.ArgumentParser()
     parser.add_argument('file_name', type=str, help='Name of netCDF4 file.')
-    parser.add_argument('-c', '--categories', nargs='+', default=[])
     args = parser.parse_args()
     # Initialise directories
     home, path = initialise(args.file_name)
 
     # Import modules
+    import copy
+    import omphalos
+    import topepan as tp
+    from topepan import plot as tpp
+    from omphalos import file_methods as fm
     from coeus import helper as hp
     from coeus import plots
     import xarray as xr
     import numpy as np
 
     # Import data
-    data = {}
-    for category in args.categories:
-        data.update({category: xr.open_dataset(path, group=category)})
+    smalls_cats = ['volume', 'rate']
+    set1, datasets = import_data(path, smalls_cats)
 
-    # Generate new quantities
-    if args.file_name == 'original_mins_low_res_19-01-24.nc':
-        data = synthetic_vars(data)
-    else:
-        data = synthetic_vars_ben_mins(data)
+    # Generate new quanitites
+    synthetic_vars(set1)
 
     font_props = font_properties()

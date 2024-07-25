@@ -51,20 +51,23 @@ def synthetic_vars_ben_mins(data):
 
 
 def synthetic_vars(data):
-    clays = ('Hsaponite(Mg)', 'Clinochlore', 'Chamosite(Daph', 'Celadonite')
-    basalt = ('Forsterite', 'Fayalite', 'Microcline', 'Ferrosilite(al', 'Enstatite(alph', 'Diopside', 'Anorthite',
-              'Albite(low)', 'Ilmenite')
-    serp = ('Chrysotile', 'Talc')
-    amph = ('Actinolite', 'Tremolite')
-    epidote = ('Epidote', 'Clinozoisite')
-    calcite_components = ('Ca++', 'HCO3-')
+    clays = ['Saponite-Mg', 'Clinochlore-7A', 'Chamosite-7A', 'Celadonite']
+    basalt = ['Forsterite', 'Fayalite', 'Hedenbergite', 'Diopside', 'Anorthite', 'Albite']
+    serp = ['Chrysotile', 'Talc']
+    amph = ['Actinolite', 'Tremolite']
+    epidote = ['Epidote', 'Clinozoisite']
 
     min_groups = [clays, basalt, serp, amph, epidote]
     group_names = ['Clays', 'Basalt', 'serp', 'amph', 'epidote']
 
+    # Must append VF for PFLOTRAN
+    for group in min_groups:
+        for i, mineral in enumerate(group):
+            group[i] = f'{mineral}_VF'
+
     for group, name in zip(min_groups, group_names):
-        ds2 = sum(data['volume'][var] for var in group)
-        data['volume'] = data['volume'].assign({name: ds2})
+        ds2 = sum(data[var] for var in group)
+        data = data.assign({name: ds2})
 
     return data
 
