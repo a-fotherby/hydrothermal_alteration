@@ -1,5 +1,5 @@
-# CrunchTope output files
-*.tec
+# Pflotran output files
+*.h5
 *.out
 *.rst
 fort.123
