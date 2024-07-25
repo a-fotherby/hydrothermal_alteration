@@ -10,8 +10,6 @@ fort.3
 run*/
 *.log
 
-*_*.in
-
 # Fig script outputs
 *.png
 
