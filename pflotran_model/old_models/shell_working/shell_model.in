@@ -22,7 +22,7 @@ END
 GRID
   TYPE structured
   ORIGIN 0.d0 0.d0 0.d0
-  NXYZ 100 1 100
+  NXYZ 128 1 128
   BOUNDS
     0    0  0
     1500  100  1500
@@ -77,7 +77,7 @@ MATERIAL_PROPERTY altered_pillows
   POROSITY 0.01
   TORTUOSITY 1.0d0
   PERMEABILITY
-    PERM_ISO 200.d-15
+    PERM_ISO 20.d-15
   /
   CHARACTERISTIC_CURVES cc1
   THERMAL_CONDUCTIVITY_DRY 1.82
@@ -121,8 +121,8 @@ END
 # =========================== output options ====================================
 OUTPUT
   SNAPSHOT_FILE
-    FORMAT HDF5 
-    PERIODIC TIME 500 y
+    FORMAT HDF5
+    PERIODIC TIME 5000 y
     VARIABLES
       MINERAL_POROSITY
       TEMPERATURE
@@ -140,7 +140,7 @@ END
 
 # =========================== times ==================================
 TIME
-  FINAL_TIME 15000.d0 y
+  FINAL_TIME 25000.d0 y
   MAXIMUM_TIMESTEP_SIZE 5000 y
 END
 
@@ -185,10 +185,18 @@ REGION reaction_zone
 END
 
 
-REGION seafloor
+REGION seafloor_in
   COORDINATES
-    0.00d0 0.d0  1499
+    175    0.d0  1499
     1500   1.d2  1500
+  /
+  FACE TOP
+END
+
+REGION seafloor_out
+  COORDINATES
+    0.00  0.d0  1499
+    175   1.d2  1500
   /
   FACE TOP
 END
@@ -208,12 +216,20 @@ FLOW_CONDITION initial
   /
 END
 
-FLOW_CONDITION seafloor
+FLOW_CONDITION seafloor_out
   TYPE
-    LIQUID_PRESSURE HYDROSTATIC 
+    LIQUID_PRESSURE DIRICHLET 
+    ENERGY_FLUX NEUMANN
+  /
+  LIQUID_PRESSURE 3.d7
+  ENERGY_FLUX 0.0 W/m^2
+END
+
+FLOW_CONDITION seafloor_in
+  TYPE
+    LIQUID_PRESSURE DIRICHLET 
     TEMPERATURE DIRICHLET
   /
-  DATUM 0.d0 0.d0 1500.d0
   LIQUID_PRESSURE 3.d7
   TEMPERATURE 2.d0
 END
@@ -237,8 +253,13 @@ END
 
 # top boundary condition
 BOUNDARY_CONDITION
-  FLOW_CONDITION seafloor
-  REGION seafloor
+  FLOW_CONDITION seafloor_in
+  REGION seafloor_in
+END
+
+BOUNDARY_CONDITION
+  FLOW_CONDITION seafloor_out
+  REGION seafloor_out
 END
 
 # bottom boundary condition
