@@ -10,7 +10,15 @@ SIMULATION
       MODE GIRT
     /
   /
+  RESTART
+    FILENAME partial_equil.chk
+    RESET_TO_TIME_ZERO
+  /
+  CHECKPOINT
+  /
 END
+
+OVERWRITE_RESTART_TRANSPORT 
 
 SUBSURFACE
 
@@ -26,11 +34,12 @@ NUMERICAL_METHODS TRANSPORT
 END
 
 
+
 # =========================== discretization ===================================
 GRID
   TYPE structured
   ORIGIN 0.d0 0.d0 0.d0
-  NXYZ 50 1 50
+  NXYZ 128 1 128
   BOUNDS
     0    0  0
     1500  100  1500
@@ -85,7 +94,7 @@ MATERIAL_PROPERTY altered_pillows
   POROSITY 0.01
   TORTUOSITY 1.0d0
   PERMEABILITY
-    PERM_ISO 200.d-15
+    PERM_ISO 20.d-15
   /
   CHARACTERISTIC_CURVES cc1
   THERMAL_CONDUCTIVITY_DRY 1.82
@@ -130,7 +139,7 @@ END
 OUTPUT
   SNAPSHOT_FILE
     FORMAT HDF5 
-    PERIODIC TIME 100 y
+    PERIODIC TIME 50 y
     VARIABLES
       TEMPERATURE
       LIQUID_PRESSURE
@@ -147,8 +156,9 @@ END
 
 # =========================== times ==================================
 TIME
-  FINAL_TIME 15000.d0 y
+  FINAL_TIME 7000 y
   MAXIMUM_TIMESTEP_SIZE 5000 y
+  #INITIAL_TIMESTEP_SIZE 1d-16 y
 END
 
 # =========================== regions ==================================
@@ -200,6 +210,23 @@ REGION seafloor
   FACE TOP
 END
 
+REGION seafloor_in
+  COORDINATES
+    175    0.d0  1499
+    1500   1.d2  1500
+  /
+  FACE TOP
+END
+
+REGION seafloor_out
+  COORDINATES
+    0.00  0.d0  1499
+    175   1.d2  1500
+  /
+  FACE TOP
+END
+
+
 
 # =========================== flow conditions ==================================
 FLOW_CONDITION initial
@@ -215,12 +242,20 @@ FLOW_CONDITION initial
   /
 END
 
-FLOW_CONDITION seafloor
+FLOW_CONDITION seafloor_out
   TYPE
-    LIQUID_PRESSURE HYDROSTATIC 
+    LIQUID_PRESSURE DIRICHLET 
+    ENERGY_FLUX NEUMANN
+  /
+  LIQUID_PRESSURE 3.d7
+  ENERGY_FLUX 0.0 W/m^2
+END
+
+FLOW_CONDITION seafloor_in
+  TYPE
+    LIQUID_PRESSURE DIRICHLET 
     TEMPERATURE DIRICHLET
   /
-  DATUM 0.d0 0.d0 1500.d0
   LIQUID_PRESSURE 3.d7
   TEMPERATURE 2.d0
 END
@@ -230,7 +265,7 @@ FLOW_CONDITION magma_lens
     LIQUID_FLUX NEUMANN
     TEMPERATURE DIRICHLET
   /
-  TEMPERATURE 350.d0
+  TEMPERATURE 300.d0
   LIQUID_FLUX 0.d0
 END
 
@@ -245,9 +280,15 @@ END
 
 # top boundary condition
 BOUNDARY_CONDITION
-  FLOW_CONDITION seafloor
+  FLOW_CONDITION seafloor_in
   TRANSPORT_CONDITION seafloor
-  REGION seafloor
+  REGION seafloor_in
+END
+
+BOUNDARY_CONDITION
+  FLOW_CONDITION seafloor_out
+  TRANSPORT_CONDITION empty
+  REGION seafloor_out
 END
 
 # bottom boundary condition
@@ -295,7 +336,6 @@ CHEMISTRY
     Na+
     SO4--
     SiO2(aq)
-    Ti(OH)4(aq)
   /
   SECONDARY_SPECIES
     OH-
@@ -321,7 +361,6 @@ CHEMISTRY
     KSO4-
     NaOH(aq)
     #NaSO4-
-    H2(aq)
   /
   PASSIVE_GAS_SPECIES
     CO2(g)
@@ -468,7 +507,6 @@ CHEMISTRY
       /
     /
 
-    skip
     # Secondary minerals
     # Amphibole
     Tremolite
@@ -497,7 +535,7 @@ CHEMISTRY
         /
       /
     /
-    
+
     # Serpentine
     Chrysotile
       PREFACTOR
@@ -527,12 +565,12 @@ CHEMISTRY
     /
 
     #Oxides
-    Hematite
-      PREFACTOR
-        RATE_CONSTANT -14.6
-        ACTIVATION_ENERGY 66.2d3
-      /
-    /
+    #Hematite
+    #  PREFACTOR
+    #    RATE_CONSTANT -14.6
+    #    ACTIVATION_ENERGY 66.2d3
+    #  /
+    #/
 
     Quartz
       PREFACTOR
@@ -568,7 +606,6 @@ CHEMISTRY
         /
       /
     /
-
     # Epidotes
     Epidote
       PREFACTOR
@@ -596,7 +633,6 @@ CHEMISTRY
         /
       /
     /
-
     # Chlorites
     Chamosite-7A
       PREFACTOR
@@ -659,15 +695,15 @@ CHEMISTRY
         /
       /
     /
-    noskip
   /
-  DATABASE hanford.dat
+  DATABASE thermo_300bars.dat
   LOG_FORMULATION
   ACTIVITY_COEFFICIENTS TIMESTEP
   OUTPUT
-    TOTAL
     ALL
+    TOTAL
     PH
+    MOLALITY
     MINERAL_SATURATION_INDEX
   /
 END
@@ -712,7 +748,6 @@ CONSTRAINT initial_constraint
     Na+         474d-3   T
     SO4--       28.2d-3  T
     SiO2(aq)    0.17d-3  T
-    Ti(OH)4(aq) 2.09d-9  T
   /
   MINERALS
     # Primary minerals
@@ -728,43 +763,40 @@ CONSTRAINT initial_constraint
     Anorthite            0.3825     4d-8 cm^2/g
     Albite               0.1625     4d-8 cm^2/g
 
-    skip
     ## Secondary minerals
     #amphibole
-    Tremolite            1.0e-10    8d-12 cm^2/g
-    Actinolite           1.0e-10    8d-12 cm^2/g
-
-
+    Tremolite            1.0e-10    8d-8 cm^2/g
+    Actinolite           1.0e-10    8d-8 cm^2/g
+    
     #serpentine
-    Chrysotile           1.0E-10    8d-12 cm^2/g
-    Talc                 1.0E-10    8d-12 cm^2/g
+    Chrysotile           1.0E-10    8d-8 cm^2/g
+    Talc                 1.0E-10    8d-8 cm^2/g
 
     # Oxides
-    Hematite             1.0E-10    8d-12 cm^2/g
+    #Hematite             1.0E-10    8d-8 cm^2/g
 
-    Quartz               1.0E-10    8d-12 cm^2/g
+    Quartz               1.0E-10    8d-8 cm^2/g
 
     #smectites
-    Saponite-Mg          1.0E-10    8d-12 cm^2/g
-    Celadonite           1.0e-10    8d-12 cm^2/g
+    Saponite-Mg          1.0E-10    8d-8 cm^2/g
+    Celadonite           1.0e-10    8d-8 cm^2/g
 
     #Epidotes
-    Epidote              1.0e-10    8d-12 cm^2/g
-    Clinozoisite         1.0e-10    8d-12 cm^2/g
+    Epidote              1.0e-10    8d-8 cm^2/g
+    Clinozoisite         1.0e-10    8d-8 cm^2/g
 
     #Chlorites
-    Chamosite-7A         1.0e-10    8d-12 cm^2/g
-    Clinochlore-7A       1.0e-10    8d-12 cm^2/g
+    Chamosite-7A         1.0e-10    8d-8 cm^2/g
+    Clinochlore-7A       1.0e-10    8d-8 cm^2/g
 
     #Na-Zeolites
-    Natrolite            1.0e-10    8d-12 cm^2/g
+    Natrolite            1.0e-10    8d-8 cm^2/g
 
     #Sulphates
-    Anhydrite            1.0E-10    8d-12 cm^2/g
+    Anhydrite            1.0E-10    8d-8 cm^2/g
 
     #Carbonates
-    Calcite              1.0E-10    8d-12 cm^2/g
-    noskip
+    Calcite              1.0E-10    8d-8 cm^2/g
   /
 END
 
@@ -783,7 +815,6 @@ CONSTRAINT inlet_constraint
     Na+         474d-3   T
     SO4--       28.2d-3  T
     SiO2(aq)    0.17d-3  T
-    Ti(OH)4(aq) 2.09d-9  T
   /
 END
 
@@ -792,7 +823,7 @@ CONSTRAINT empty
     H+          1.d-15 T
     Al+++       1.d-15 T
     O2(aq)      1.d-15 T
-    Mg++        1.d-15 T 
+    Mg++        1.d-15 T
     Ca++        1.d-15 T
     Fe++        1.d-15 T
     Fe+++       1.d-15 T
@@ -802,7 +833,6 @@ CONSTRAINT empty
     Na+         1.d-15 T
     SO4--       1.d-15 T
     SiO2(aq)    1.d-15 T
-    Ti(OH)4(aq) 1.d-15 T
   /
 END
 
