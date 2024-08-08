@@ -696,7 +696,7 @@ CHEMISTRY
       /
     /
   /
-  DATABASE thermo_300bars.dat
+  DATABASE hanford.dat
   LOG_FORMULATION
   ACTIVITY_COEFFICIENTS TIMESTEP
   OUTPUT
