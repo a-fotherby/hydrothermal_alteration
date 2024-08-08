@@ -25,7 +25,292 @@ NUMERICAL_METHODS TRANSPORT
   /
 END
 
-# =========================== chemistry ========================================
+
+# =========================== discretization ===================================
+GRID
+  TYPE structured
+  ORIGIN 0.d0 0.d0 0.d0
+  NXYZ 128 1 128
+  BOUNDS
+    0    0  0
+    1500  100  1500
+  /
+END
+
+
+#=========================== fluid properties =================================
+FLUID_PROPERTY
+  DIFFUSION_COEFFICIENT 1.d-9
+END
+
+
+#=========================== Equation of state =================================
+EOS WATER
+  DENSITY IF97
+  ENTHALPY IF97
+END
+
+# =========================== material properties ==============================
+MATERIAL_PROPERTY sheeted_dykes
+  ID 1
+  POROSITY 0.01
+  TORTUOSITY 1.0d0
+  PERMEABILITY
+    PERM_ISO 2e-15
+  /
+  CHARACTERISTIC_CURVES cc1
+  THERMAL_CONDUCTIVITY_DRY 1.82
+  THERMAL_CONDUCTIVITY_WET 1.82
+  SPECIFIC_HEAT 800
+  ROCK_DENSITY 2700
+END
+
+MATERIAL_PROPERTY pillows
+  ID 2
+  POROSITY 0.01
+  TORTUOSITY 1.0d0
+  PERMEABILITY
+    PERM_ISO 200.d-15
+  /
+  CHARACTERISTIC_CURVES cc1
+  THERMAL_CONDUCTIVITY_DRY 1.82
+  THERMAL_CONDUCTIVITY_WET 1.82
+  SPECIFIC_HEAT 800
+  ROCK_DENSITY 2700
+END
+
+
+MATERIAL_PROPERTY altered_pillows
+  ID 3
+  POROSITY 0.01
+  TORTUOSITY 1.0d0
+  PERMEABILITY
+    PERM_ISO 20.d-15
+  /
+  CHARACTERISTIC_CURVES cc1
+  THERMAL_CONDUCTIVITY_DRY 1.82
+  THERMAL_CONDUCTIVITY_WET 1.82
+  SPECIFIC_HEAT 800
+  ROCK_DENSITY 2700
+END
+
+MATERIAL_PROPERTY low_perm
+  ID 4
+  POROSITY 0.01
+  TORTUOSITY 1.0d0
+  PERMEABILITY
+    PERM_ISO 0.2d-15
+  /
+  CHARACTERISTIC_CURVES cc1
+  THERMAL_CONDUCTIVITY_DRY 1.82
+  THERMAL_CONDUCTIVITY_WET 1.82
+  SPECIFIC_HEAT 800
+  ROCK_DENSITY 2700
+END
+
+
+#=========================== characteristic curves ============================
+CHARACTERISTIC_CURVES cc1
+  skip
+  SATURATION_FUNCTION VAN_GENUCHTEN
+    LIQUID_RESIDUAL_SATURATION 0.1d0
+    M 0.8d0
+    ALPHA 1.d-4
+  /
+  PERMEABILITY_FUNCTION MUALEM_VG_LIQ
+    LIQUID_RESIDUAL_SATURATION 0.1d0
+    M 0.8d0
+  /
+  noskip
+  DEFAULT
+END
+
+
+# =========================== output options ====================================
+OUTPUT
+  SNAPSHOT_FILE
+    FORMAT HDF5 
+    PERIODIC TIME 100 y
+    VARIABLES
+      TEMPERATURE
+      LIQUID_PRESSURE
+      LIQUID_DENSITY
+      LIQUID_SATURATION
+      LIQUID_VISCOSITY
+      PERMEABILITY
+      POROSITY
+    /
+  /
+  VELOCITY_AT_CENTER
+END
+
+
+# =========================== times ==================================
+TIME
+  FINAL_TIME 15000.d0 y
+  MAXIMUM_TIMESTEP_SIZE 5000 y
+END
+
+# =========================== regions ==================================
+REGION all
+  COORDINATES
+    0.d0 0.d0 0.d0
+    1500 1.d2 1500
+  /
+END
+
+REGION downwelling
+  COORDINATES
+    175  0.d0 1090
+    1500 1.d2 1500
+  /
+END
+
+REGION upwelling
+  COORDINATES
+    0    0.d0 1090
+    60   1.d2 1500
+  /
+END
+
+
+REGION low_perm
+  COORDINATES
+    60   0.d0 1090
+    175  1.d2 1500
+  /
+END
+
+
+# =========================== boundaries ==================================
+REGION reaction_zone
+  COORDINATES
+    0.d0  0.d0  0.d0
+    1500  1.d2  1.d0
+  /
+  FACE BOTTOM
+END
+
+
+REGION seafloor
+  COORDINATES
+    0.00d0 0.d0  1499
+    1500   1.d2  1500
+  /
+  FACE TOP
+END
+
+REGION seafloor_in
+  COORDINATES
+    175    0.d0  1499
+    1500   1.d2  1500
+  /
+  FACE TOP
+END
+
+REGION seafloor_out
+  COORDINATES
+    0.00  0.d0  1499
+    175   1.d2  1500
+  /
+  FACE TOP
+END
+
+
+
+# =========================== flow conditions ==================================
+FLOW_CONDITION initial
+  TYPE
+    LIQUID_PRESSURE HYDROSTATIC
+    TEMPERATURE DIRICHLET
+  /
+  DATUM 0 0.d0 1500.d0
+  LIQUID_PRESSURE 3.d7
+  TEMPERATURE 2
+  GRADIENT 
+     TEMPERATURE -6.67d-4 0 -0.2
+  /
+END
+
+FLOW_CONDITION seafloor_out
+  TYPE
+    LIQUID_PRESSURE DIRICHLET 
+    ENERGY_FLUX NEUMANN
+  /
+  LIQUID_PRESSURE 3.d7
+  ENERGY_FLUX 0.0 W/m^2
+END
+
+FLOW_CONDITION seafloor_in
+  TYPE
+    LIQUID_PRESSURE DIRICHLET 
+    TEMPERATURE DIRICHLET
+  /
+  LIQUID_PRESSURE 3.d7
+  TEMPERATURE 2.d0
+END
+
+FLOW_CONDITION magma_lens
+  TYPE
+    LIQUID_FLUX NEUMANN
+    TEMPERATURE DIRICHLET
+  /
+  TEMPERATURE 350.d0
+  LIQUID_FLUX 0.d0
+END
+
+
+# =========================== condition couplers ===============================
+# initial condition
+INITIAL_CONDITION
+  FLOW_CONDITION initial
+  TRANSPORT_CONDITION initial
+  REGION all
+END
+
+# top boundary condition
+BOUNDARY_CONDITION
+  FLOW_CONDITION seafloor_in
+  TRANSPORT_CONDITION seafloor
+  REGION seafloor_in
+END
+
+BOUNDARY_CONDITION
+  FLOW_CONDITION seafloor_out
+  TRANSPORT_CONDITION seafloor
+  REGION seafloor_out
+END
+
+# bottom boundary condition
+BOUNDARY_CONDITION
+  FLOW_CONDITION magma_lens
+  TRANSPORT_CONDITION empty
+  REGION reaction_zone
+END
+
+
+#=========================== stratigraphy couplers ============================
+STRATA
+  REGION all
+  MATERIAL sheeted_dykes
+END
+
+STRATA
+  REGION upwelling
+  MATERIAL altered_pillows
+END
+
+STRATA
+  REGION downwelling
+  MATERIAL pillows
+END
+
+STRATA
+  REGION low_perm
+  MATERIAL low_perm
+END
+
+#=========================== chemistry ======================================
 CHEMISTRY
   PRIMARY_SPECIES
     H+
@@ -214,6 +499,7 @@ CHEMISTRY
       /
     /
 
+    skip
     # Secondary minerals
     # Amphibole
     Tremolite
@@ -242,7 +528,7 @@ CHEMISTRY
         /
       /
     /
-
+    
     # Serpentine
     Chrysotile
       PREFACTOR
@@ -404,221 +690,17 @@ CHEMISTRY
         /
       /
     /
+    noskip
   /
   DATABASE hanford.dat
   LOG_FORMULATION
-#  OPERATOR_SPLITTING
   ACTIVITY_COEFFICIENTS TIMESTEP
   OUTPUT
-    PH
     TOTAL
-    FREE_ION
     ALL
+    PH
+    MINERAL_SATURATION_INDEX
   /
-END
-
-# =========================== discretization ===================================
-GRID
-  TYPE structured
-  ORIGIN 0.d0 0.d0 0.d0
-  NXYZ 50 1 100
-  BOUNDS
-    0    0  0
-    500  10  1000
-  /
-END
-
-
-#=========================== fluid properties =================================
-FLUID_PROPERTY
-  DIFFUSION_COEFFICIENT 1.d-9
-END
-
-
-#=========================== Equation of state =================================
-EOS WATER
-  DENSITY IF97
-  ENTHALPY IF97
-/
-
-
-# =========================== material properties ==============================
-MATERIAL_PROPERTY sheeted_dykes
-  ID 1
-  POROSITY 0.01
-  TORTUOSITY 1.0d0
-  PERMEABILITY
-    PERM_ISO 1.d-14
-  /
-  CHARACTERISTIC_CURVES cc1
-  THERMAL_CONDUCTIVITY_DRY 0.5
-  THERMAL_CONDUCTIVITY_WET 2.0
-  SPECIFIC_HEAT 1.15d3
-/
-
-
-MATERIAL_PROPERTY pillows
-  ID 2
-  POROSITY 0.01
-  TORTUOSITY 1.0d0
-  PERMEABILITY
-    PERM_ISO 100.d-14
-  /
-  CHARACTERISTIC_CURVES cc1
-  THERMAL_CONDUCTIVITY_DRY 0.5
-  THERMAL_CONDUCTIVITY_WET 2.0
-  SPECIFIC_HEAT 1.15d3
-/
-
-
-MATERIAL_PROPERTY altered_pillows
-  ID 3
-  POROSITY 0.01
-  TORTUOSITY 1.0d0
-  PERMEABILITY
-    PERM_ISO 10.d-14
-  /
-  CHARACTERISTIC_CURVES cc1
-  THERMAL_CONDUCTIVITY_DRY 0.5
-  THERMAL_CONDUCTIVITY_WET 2.0
-  SPECIFIC_HEAT 1.15d3
-/
-
-
-#=========================== characteristic curves ============================
-CHARACTERISTIC_CURVES cc1
-  SATURATION_FUNCTION VAN_GENUCHTEN
-    LIQUID_RESIDUAL_SATURATION 0.1d0
-    M 0.8d0
-    ALPHA 1.d-4
-  /
-  PERMEABILITY_FUNCTION MUALEM_VG_LIQ
-    LIQUID_RESIDUAL_SATURATION 0.1d0
-    M 0.8d0
-  /
-/
-
-
-# =========================== output options ====================================
-OUTPUT
-  SNAPSHOT_FILE
-    FORMAT HDF5 
-    PERIODIC TIME 500 y
-    VARIABLES
-      MINERAL_POROSITY
-      TEMPERATURE
-      LIQUID_PRESSURE
-      LIQUID_DENSITY
-      PERMEABILITY
-      MATERIAL_ID
-    /
-  /
-  VELOCITY_AT_CENTER
-/
-
-# times
-TIME
-  FINAL_TIME 15000 y
-  MAXIMUM_TIMESTEP_SIZE 500 y
-/
-
-# regions
-REGION all
-  COORDINATES
-    0.d0 0.d0 0.d0
-    5.d2 1.d1 1.d3
-  /
-END
-
-REGION downwelling_upper
-  COORDINATES
-    0.d0   0.d0  590.d0
-    10.d0  1.d1  1.d3
-  /
-END
-
-REGION downwelling_lower
-  COORDINATES
-    0.d0   0.d0  10.d0
-    10.d0  1.d1  590.d0
-  /
-END
-
-REGION upwelling_upper
-  COORDINATES
-    4.90d2  0.d0  590.d0
-    5.00d2  1.d1  1.d3
-  /
-END
-
-REGION upwelling_lower
-  COORDINATES
-    4.90d2  0.d0  10.d0
-    5.00d2  1.d1  590.d0
-  /
-END
-
-REGION inactive
-  COORDINATES
-    10.d0    0.d0  10.d0
-    4.90d2   1.d1  1.d3
-  /
-END
-
-# =========================== boundaries ==================================
-REGION reaction_zone
-  COORDINATES
-    0.d0  0.d0  0.d0
-    5.d2  1.d1  10.d0
-  /
-  FACE BOTTOM
-END
-
-REGION outlet
-  COORDINATES
-    4.90d2 0.d0 9.99d2
-    5.00d2 1.d1 1.d3
-  /
-  FACE TOP
-END
-
-REGION inlet
-  COORDINATES
-    0.d0  0.d0 9.99d2
-    10.d0 1.d1 1.d3
-  /
-  FACE TOP
-END
-
-
-# =========================== flow conditions ==================================
-FLOW_CONDITION initial
-  TYPE
-    LIQUID_PRESSURE HYDROSTATIC
-    TEMPERATURE DIRICHLET
-  /
-  DATUM 0 0.d0 1500.d0
-  LIQUID_PRESSURE 3.d7
-  TEMPERATURE 2
-END
-
-FLOW_CONDITION seafloor
-  TYPE
-    LIQUID_PRESSURE HYDROSTATIC 
-    TEMPERATURE DIRICHLET
-  /
-  DATUM 0.d0 0.d0 1.d3
-  LIQUID_PRESSURE 3.d7
-  TEMPERATURE 2.d0
-END
-
-FLOW_CONDITION magma_lens
-  TYPE
-    LIQUID_FLUX NEUMANN
-    TEMPERATURE DIRICHLET
-  /
-  TEMPERATURE 2
-  LIQUID_FLUX 0.d0
 END
 
 
@@ -643,6 +725,7 @@ TRANSPORT_CONDITION empty
     0.d0 empty
   /
 END
+
 
 #=========================== constraints ======================================
 CONSTRAINT initial_constraint
@@ -676,41 +759,43 @@ CONSTRAINT initial_constraint
     Anorthite            0.3825     4d-8 cm^2/g
     Albite               0.1625     4d-8 cm^2/g
 
+    skip
     ## Secondary minerals
     #amphibole
-    Tremolite            1.0e-10    8d-8 cm^2/g
-    Actinolite           1.0e-10    8d-8 cm^2/g
+    Tremolite            1.0e-10    8d-12 cm^2/g
+    Actinolite           1.0e-10    8d-12 cm^2/g
 
 
     #serpentine
-    Chrysotile           1.0E-10    8d-8 cm^2/g
-    Talc                 1.0E-10    8d-8 cm^2/g
+    Chrysotile           1.0E-10    8d-12 cm^2/g
+    Talc                 1.0E-10    8d-12 cm^2/g
 
     # Oxides
-    Hematite             1.0E-10    8d-8 cm^2/g
+    Hematite             1.0E-10    8d-12 cm^2/g
 
-    Quartz               1.0E-10    8d-8 cm^2/g
+    Quartz               1.0E-10    8d-12 cm^2/g
 
     #smectites
-    Saponite-Mg          1.0E-10    8d-8 cm^2/g
-    Celadonite           1.0e-10    8d-8 cm^2/g
+    Saponite-Mg          1.0E-10    8d-12 cm^2/g
+    Celadonite           1.0e-10    8d-12 cm^2/g
 
     #Epidotes
-    Epidote              1.0e-10    8d-8 cm^2/g
-    Clinozoisite         1.0e-10    8d-8 cm^2/g
+    Epidote              1.0e-10    8d-12 cm^2/g
+    Clinozoisite         1.0e-10    8d-12 cm^2/g
 
     #Chlorites
-    Chamosite-7A         1.0e-10    8d-8 cm^2/g
-    Clinochlore-7A       1.0e-10    8d-8 cm^2/g
+    Chamosite-7A         1.0e-10    8d-12 cm^2/g
+    Clinochlore-7A       1.0e-10    8d-12 cm^2/g
 
     #Na-Zeolites
-    Natrolite            1.0e-10    8d-8 cm^2/g
+    Natrolite            1.0e-10    8d-12 cm^2/g
 
     #Sulphates
-    Anhydrite            1.0E-10    8d-8 cm^2/g
+    Anhydrite            1.0E-10    8d-12 cm^2/g
 
     #Carbonates
-    Calcite              1.0E-10    8d-8 cm^2/g
+    Calcite              1.0E-10    8d-12 cm^2/g
+    noskip
   /
 END
 
@@ -751,42 +836,5 @@ CONSTRAINT empty
     Ti(OH)4(aq) 1.d-15 T
   /
 END
-
-# =========================== condition couplers ===============================
-# initial condition
-INITIAL_CONDITION
-  FLOW_CONDITION initial
-  TRANSPORT_CONDITION initial
-  REGION all
-END
-
-# top boundary condition
-BOUNDARY_CONDITION
-  FLOW_CONDITION seafloor
-  TRANSPORT_CONDITION seafloor
-  REGION inlet
-END
-
-BOUNDARY_CONDITION
-  FLOW_CONDITION seafloor
-  TRANSPORT_CONDITION seafloor
-  REGION outlet
-END
-
-# bottom boundary condition
-BOUNDARY_CONDITION
-  FLOW_CONDITION magma_lens
-  TRANSPORT_CONDITION empty
-  REGION reaction_zone
-END
-
-
-#=========================== stratigraphy couplers ============================
-STRATA
-  REGION all
-  MATERIAL sheeted_dykes
-  INACTIVE
-END
-
 
 END_SUBSURFACE
