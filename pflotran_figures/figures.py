@@ -118,20 +118,33 @@ def c_flux_to_moles(x):
 
 if __name__ == '__main__':
     import argparse
+    import os
+    from pathlib import Path
+    import sys
+
+    module_path = Path('/home/angus/work/Omphalos')
+
+    if module_path not in sys.path:
+        sys.path.append(module_path)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('file_name', type=str, help='Name of netCDF4 file.')
+    parser.add_argument('file_name', type=str, help='Name of .h5 file.')
+
     args = parser.parse_args()
     # Initialise directories
     home, path = initialise(args.file_name)
 
     # Import modules
-    from coeus import helper as hp
+    from coeus import pflotran as pfl
     from coeus import plots
     import xarray as xr
     import numpy as np
 
-    data = xr.open_dataset(path)
+    import h5py
+
+    # Open the HDF5 file in read mode
+    with h5py.File(path, 'r') as hdf:
+        data = pfl.h5_to_xarray(hdf)
 
 
     font_props = font_properties()
