@@ -1,4 +1,5 @@
 # Pflotran output files
+*.nc
 *.h5
 *.out
 *.rst
@@ -12,6 +13,7 @@ run*/
 
 # Fig script outputs
 *.png
+*.mp4
 
 # Ignore IDE files
 .idea/
