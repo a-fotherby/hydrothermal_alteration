@@ -376,7 +376,6 @@ CHEMISTRY
     # Secondary minerals
     # Amphibole
     Tremolite
-    Actinolite
 
     # Serpentine
     Chrysotile
@@ -388,18 +387,18 @@ CHEMISTRY
 
     # Smectites
     Saponite-Mg
-    Celadonite
+    Illite_Mg
 
     # Epidotes
     Epidote
-    Clinozoisite
+    Zoisite
 
     # Chlorites
     Chamosite-7A
     Clinochlore-7A
 
     # Na-zeolites
-    Natrolite
+    Analcime
 
     Anhydrite
     Calcite
@@ -410,28 +409,34 @@ CHEMISTRY
     Forsterite
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -10.64d0
-        ACTIVATION_ENERGY 79.0d3 J/mol
+        RATE_CONSTANT -7.16d0
+        ACTIVATION_ENERGY 70.4d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.4
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -6.85d0
-        ACTIVATION_ENERGY 67.2d3 J/mol
+        RATE_CONSTANT -8.33d0
+        ACTIVATION_ENERGY 60.9d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.470
+          ALPHA 0.2
         /
       /
     /
     Fayalite
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -10.64d0
-        ACTIVATION_ENERGY 79.0d3 J/mol
+        RATE_CONSTANT -6.26d0
+        ACTIVATION_ENERGY 70.4d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.4
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -6.85d0
-        ACTIVATION_ENERGY 67.2d3 J/mol
+        RATE_CONSTANT -7.39d0
+        ACTIVATION_ENERGY 60.9d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.470
+          ALPHA 0.2
         /
       /
     /
@@ -439,71 +444,72 @@ CHEMISTRY
     Diopside
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.24d0
-        ACTIVATION_ENERGY 80.0d3 J/mol
+        RATE_CONSTANT -9.8d0
+        ACTIVATION_ENERGY 32.7d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.3
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -8.54d0
-        ACTIVATION_ENERGY 80.0d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA 0.60
-        /
+        RATE_CONSTANT -11.0d0
+        ACTIVATION_ENERGY 43.9d3 J/mol
       /
     /
     Hedenbergite
+      # Using Hermanska Augite kinetics as "general" pyroxene
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.24d0
-        ACTIVATION_ENERGY 80.0d3 J/mol
+        RATE_CONSTANT -8.20d0
+        ACTIVATION_ENERGY 81.8d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.7
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -8.54d0
-        ACTIVATION_ENERGY 80.0d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA 0.60
-        /
+        RATE_CONSTANT -12.8d0
+        ACTIVATION_ENERGY 83.0d3 J/mol
       /
     /
     # Plagiocalse An70 
     Anorthite
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.56d0
-        ACTIVATION_ENERGY 69.8d3 J/mol
-      /
-      PREFACTOR
-        RATE_CONSTANT -10.16d0
-        ACTIVATION_ENERGY 65.0d3 J/mol
+        RATE_CONSTANT -5.17d0
+        ACTIVATION_ENERGY 58.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.457
+          ALPHA 1.2
         /
       /
       PREFACTOR
-        RATE_CONSTANT -15.60d0
-        ACTIVATION_ENERGY 71.0d3 J/mol
+        RATE_CONSTANT -11.34d0
+        ACTIVATION_ENERGY 60.0d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -13.6d0
+        ACTIVATION_ENERGY 50.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA -0.572
+          ALPHA -0.3
         /
       /
     /
     Albite
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -11.15d0
-        ACTIVATION_ENERGY 69.8d3 J/mol
-      /
-      PREFACTOR
-        RATE_CONSTANT -10.16d0
-        ACTIVATION_ENERGY 65.0d3 J/mol
+        RATE_CONSTANT -10.30d0
+        ACTIVATION_ENERGY 58.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.457
+          ALPHA 0.3
         /
       /
       PREFACTOR
-        RATE_CONSTANT -15.60d0
-        ACTIVATION_ENERGY 71.0d3 J/mol
+        RATE_CONSTANT -11.19d0
+        ACTIVATION_ENERGY 60.0d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -13.6d0
+        ACTIVATION_ENERGY 50.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA -0.572
+          ALPHA -0.3
         /
       /
     /
@@ -511,61 +517,51 @@ CHEMISTRY
     # Secondary minerals
     # Amphibole
     Tremolite
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
-      /
-      PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -11.3d0
+        ACTIVATION_ENERGY 50.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.5
+          ALPHA 0.2
         /
       /
-    /
-    Actinolite
-      SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
-      /
-      PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA 0.5
-        /
+        RATE_CONSTANT -13.1d0
+        ACTIVATION_ENERGY 48.0d3 J/mol
       /
     /
 
     # Serpentine
     Chrysotile
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -10.3d0
+        ACTIVATION_ENERGY 27.0d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.25
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA 0.5
-        /
+        RATE_CONSTANT -12.4d0
+        ACTIVATION_ENERGY 27.0d3 J/mol
       /
     /
+
     Talc
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -11.1d0
+        ACTIVATION_ENERGY 50.2d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.36
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA 0.5
-        /
+        RATE_CONSTANT -12.9d0
+        ACTIVATION_ENERGY 40.7d3 J/mol
       /
     /
 
@@ -578,118 +574,189 @@ CHEMISTRY
     #/
 
     Quartz
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -13.99
-        ACTIVATION_ENERGY 87.7d3 J/mol
+        RATE_CONSTANT -11.4d0
+        ACTIVATION_ENERGY 45.6d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.3
+        /
+      /
+      PREFACTOR
+        RATE_CONSTANT -15.0d0
+        ACTIVATION_ENERGY 80.0d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA -0.4
+        /
       /
     /
 
     # Smectites
     Saponite-Mg
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -11.7d0
+        ACTIVATION_ENERGY 50.8d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.55
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -14.3d0
+        ACTIVATION_ENERGY 30.0d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -17.2d0
+        ACTIVATION_ENERGY 48.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.5
+          ALPHA -0.3
         /
       /
     /
-    Celadonite
+
+    # Illites
+    Illite_Mg
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -11.9d0
+        ACTIVATION_ENERGY 50.0d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.55
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -14.68d0
+        ACTIVATION_ENERGY 70.0d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -20.19d0
+        ACTIVATION_ENERGY 74.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.5
+          ALPHA -0.6
         /
       /
     /
     # Epidotes
     Epidote
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -10.47d0
+        ACTIVATION_ENERGY 60.0d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.3
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -11.9d0
+        ACTIVATION_ENERGY 43.2d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -16.3d0
+        ACTIVATION_ENERGY 42.3d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.5
+          ALPHA -0.4
         /
       /
     /
-    Clinozoisite
+    Zoisite
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -10.47d0
+        ACTIVATION_ENERGY 60.0d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.3
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -11.9d0
+        ACTIVATION_ENERGY 43.2d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -16.3d0
+        ACTIVATION_ENERGY 42.3d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.5
+          ALPHA -0.4
         /
       /
     /
     # Chlorites
     Chamosite-7A
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -9.08d0
+        ACTIVATION_ENERGY 30.0d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.74
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -13.0d0
+        ACTIVATION_ENERGY 15.0d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -14.3d0
+        ACTIVATION_ENERGY 15.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.5
+          ALPHA -0.2
         /
       /
     /
+
     Clinochlore-7A
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -9.08d0
+        ACTIVATION_ENERGY 30.0d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.74
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -13.0d0
+        ACTIVATION_ENERGY 15.0d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -14.3d0
+        ACTIVATION_ENERGY 15.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.5
+          ALPHA -0.2
         /
       /
     /
 
     # Na-zeolites
-    Natrolite
+    Analcime
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
-        RATE_CONSTANT -12.52d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -3.3
+        ACTIVATION_ENERGY 63.0d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 1.0
+        /
       /
       PREFACTOR
-        RATE_CONSTANT -11.11d0
-        ACTIVATION_ENERGY 88.0d3 J/mol
+        RATE_CONSTANT -11.3
+        ACTIVATION_ENERGY 58.5d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -14.3
+        ACTIVATION_ENERGY 58.0d3 J/mol
         PREFACTOR_SPECIES H+
-          ALPHA 0.5
+          ALPHA -0.4
         /
       /
     /
 
     Anhydrite
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
         RATE_CONSTANT -6.5d0
@@ -697,6 +764,7 @@ CHEMISTRY
       /
     /
     Calcite
+      VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
       PREFACTOR
         RATE_CONSTANT -6.74d0
@@ -771,51 +839,50 @@ CONSTRAINT initial_constraint
   MINERALS
     # Primary minerals
     #olivine, total (40%) Fo85 (Ben's paper)
-    Forsterite           0.0415     4d-7 m^2/g
-    Fayalite             0.0070     4d-7 m^2/g
+    Forsterite           0.0415     1d-6 m^2/g
+    Fayalite             0.0070     1d-6 m^2/g
 
     #CPX Di85 He15
-    Diopside             0.315      4d-7 m^2/g
-    Hedenbergite         0.050      4d-7 m^2/g
+    Diopside             0.315      1d-6 m^2/g
+    Hedenbergite         0.050      1d-6 m^2/g
 
     #plagioclase An7
-    Anorthite            0.3825     4d-7 m^2/g
-    Albite               0.1625     4d-7 m^2/g
+    Anorthite            0.3825     1d-6 m^2/g
+    Albite               0.1625     1d-6 m^2/g
 
     ## Secondary minerals
     #amphibole
-    Tremolite            1.0e-10    8d-7 m^2/g
-    Actinolite           1.0e-10    8d-7 m^2/g
+    Tremolite            1.0e-10    1d-3 m^2/g
     
     #serpentine
-    Chrysotile           1.0E-10    8d-7 m^2/g
-    Talc                 1.0E-10    8d-7 m^2/g
+    Chrysotile           1.0E-10    1d-3 m^2/g
+    Talc                 1.0E-10    1d-3 m^2/g
 
     # Oxides
-    #Hematite             1.0E-10    8d-7 cm^2/g
+    #Hematite             1.0E-10    1d-3 cm^2/g
 
-    Quartz               1.0E-10    8d-7 m^2/g
+    Quartz               1.0E-10    1d-3 m^2/g
 
     #smectites
-    Saponite-Mg          1.0E-10    8d-7 m^2/g
-    Celadonite           1.0e-10    8d-7 m^2/g
+    Saponite-Mg          1.0E-10    1d-3 m^2/g
+    Illite_Mg           1.0e-10    1d-3 m^2/g
 
     #Epidotes
-    Epidote              1.0e-10    8d-7 m^2/g
-    Clinozoisite         1.0e-10    8d-7 m^2/g
+    Epidote              1.0e-10    1d-3 m^2/g
+    Zoisite              1.0e-10    1d-3 m^2/g
 
     #Chlorites
-    Chamosite-7A         1.0e-10    8d-7 m^2/g
-    Clinochlore-7A       1.0e-10    8d-7 m^2/g
+    Chamosite-7A         1.0e-10    1d-3 m^2/g
+    Clinochlore-7A       1.0e-10    1d-3 m^2/g
 
     #Na-Zeolites
-    Natrolite            1.0e-10    8d-7 m^2/g
+    Analcime             1.0e-10    1d-3 m^2/g
 
     #Sulphates
-    Anhydrite            1.0E-10    8d-7 m^2/g
+    Anhydrite            1.0E-10    1d-3 m^2/g
 
     #Carbonates
-    Calcite              1.0E-10    8d-7 m^2/g
+    Calcite              1.0E-10    1d-3 m^2/g
   /
 END
 
@@ -824,8 +891,7 @@ CONSTRAINT inlet_constraint
     H+          8.15     P
     Al+++       0.037d-9 T
     O2(aq)      1.0d-18  T  
-    #Mg++        52.8d-3  T
-    Mg++        10.0d-3  T
+    Mg++        52.8d-3  T
     Ca++        10.3d-3  T
     Fe++        1.0d-15  T
     Fe+++       1.0d-9   T
