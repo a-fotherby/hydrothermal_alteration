@@ -6,6 +6,8 @@
 fort.123
 fort.3
 
+research/
+
 # Rhea files
 *.sh.*
 run*/
