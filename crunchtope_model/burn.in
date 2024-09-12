@@ -43,80 +43,72 @@ SO4--                        28.2
 Ca++                         10.3
 K+                           10.2
 HCO3-                        2.06
-!F-                           6.8E-5
 Al+++                        0.037e-6   
 Fe+++                        1.0e-6
 Fe++                         1.0e-12
-
 O2(aq)                       1.0e-15
-!HS-                          1.0E-10
-!NO3-                         3.9e-5
-H4SiO4(aq)                   0.17
-Ti(OH)4(aq)                  2.09E-6
+SiO2(aq)                   0.17
 
 ! SOLID PHASE
 !porosity = 0.1, total solid phase = 0.9
 
-!olivine, total (40%)
-Forsterite                   0.030            ssa 1e-10
-Fayalite                     0.030            ssa 1e-10 
+! Primary minerals
+! Primary minerals
+!olivine, total (40%) Fo85 (Ben's paper)
+Forsterite           0.0415    ssa 1d-6
+Fayalite             0.0070    ssa 1d-6
 
-!pyroxene
-Diopside                     0.190            ssa 1e-10
-!Enstatite + Ferrosillite = Hypersthene
-Enstatite(alpha)            0.050             ssa 1e-10
-Ferrosilite(alpha)          0.050             ssa 1e-10
+!CPX Di85 He15
+Diopside             0.315     ssa 1d-6
+Hedenbergite         0.050     ssa 1d-6
 
-!microcline as sub for orthoclase
-Microcline                   0.010            ssa 1e-10
+!plagioclase An7
+Anorthite            0.3825    ssa 1d-6
+Albite               0.1625    ssa 1d-6
 
-!plagioclase
-Anorthite                    0.258            ssa 1e-10
-Albite(low)                  0.258            ssa 1e-10
-
-Ilmenite                     0.020            ssa 1e-10
-
-!! Secondary minerals
-
+!# Secondary minerals
 !amphibole
-Tremolite                    1.0e-10        ssa 2e-10
-Actinolite                   1.0e-10        ssa 2e-10
-
-!Brucite                      1.0E-10        ssa 2e-10
+Tremolite            1.0e-10   ssa 5d-3
 
 !serpentine
-Chrysotile                   1.0E-10        ssa 2e-10 
-Talc                         1.0E-10        ssa 2e-10
+Chrysotile           1.0E-10   ssa 5d-3
+Talc                 1.0E-10   ssa 5d-3
 
-Hematite                     1.0E-10       ssa 2e-10
+! Oxides
+!Hematite             1.0E-10  ssa 5d-3
 
-Quartz(alpha)                1.0E-10        ssa 2e-10   
+Quartz               1.0E-10   ssa 5d-3
+
+! Mica
+Annite               1.0E-10   ssa 5d-3
 
 !smectites
-!important clays
-Hsaponite(Mg)                1.0E-10        ssa 2e-10
-Celadonite                   1.0e-10        ssa 2e-10   
+Saponite_Mg          1.0E-10   ssa 5d-3
+Saponite_FeMg          1.0E-10 ssa   5d-3
+
+! Illite
+Illite_Mg           1.0e-10    ssa5d-3
 
 !Epidotes
-Epidote                      1.0e-10        ssa 2e-10
-Clinozoisite                 1.0e-10        ssa 2e-10
+Epidote              1.0e-10   ssa 5d-3
+Zoisite              1.0e-10   ssa 5d-3
 
 !Chlorites
-Chamosite(Daphnite)          1.0e-10        ssa 2e-10
-Clinochlore                  1.0e-10        ssa 2e-10
+Chamosite-7A         1.0e-10   ssa 5d-3
+Clinochlore-7A       1.0e-10   ssa 5d-3
 
 !Na-Zeolites
-Natrolite                    1.0e-10        ssa 2e-10
+Analcime             1.0e-10   ssa 5d-3
 
-!Pyrite
-!FeS(am)                      1.0e-10        ssa 2e-10
+!Hydroxides
+Gibbsite             1.0E-10   ssa 5d-3
+Diaspore             1.0E-10   ssa 5d-3
 
 !Sulphates
-Anhydrite                    1.0E-10        ssa 2e-10  
+Anhydrite            1.0E-10   ssa 5d-3
 
 !Carbonates
-Calcite                      1.0E-10        ssa 2e-10   
-!Siderite                     1.0E-10        ssa 2e-10
+Calcite              1.0E-10   ssa 5d-3
 END
 
 CONDITION                    Boundary
@@ -131,101 +123,104 @@ SO4--                        28.2
 Ca++                         10.3
 K+                           10.2
 HCO3-                        2.06
-Al+++                        0.037e-6   
+Al+++                        0.037e-6
 Fe+++                        1.0e-6
 Fe++                         1.0e-12
-
 O2(aq)                       1.0e-15
-!HS-                          1.0E-10
-!NO3-                         3.9e-5
-H4SiO4(aq)                   0.17
-Ti(OH)4(aq)                  2.09E-6
+SiO2(aq)                   0.17
 END
 
 MINERALS
-!Basalt CIPW norm
-!Olivine 
-Forsterite                   -rate -10.64   -activation 18.88
-Forsterite                   -label h+
-Fayalite                     -rate -10.64   -activation 18.88
-Fayalite                     -label h+
+! Primary minerals
+!olivine, total (40%) Fo85 (Ben's paper)
+Forsterite           -label oh-
+Forsterite           -label h+
+Fayalite             -label oh-
+Fayalite             -label h+
 
-Microcline                   -rate -12.56   -activation 16.68
-Microcline                   -label h+
-Microcline                   -label oh-
+!CPX Di85 He15
+Diopside             -label default
+Diopside             -label h+
+Hedenbergite         -label default
+Hedenbergite         -label h+ 
 
-!orthopyroxene
-Ferrosilite(alpha)           -rate -12.71   -activation 19.12
-Enstatite(alpha)             -rate -12.71   -activation 19.12
+!plagioclase An7
+Anorthite            -label default
+Anorthite            -label h+
+Anorthite            -label oh-
+Albite               -label default
+Albite               -label h+
+Albite               -label oh-
 
-!clinopyroxene
-Diopside                     -rate -12.24   -activation 19.12
-Diopside                     -label h+
-
-!plagioclase
-Anorthite                    -rate -12.56   -activation 16.68
-Anorthite                    -label h+
-Anorthite                    -label oh-
-Albite(low)                  -rate -11.15   -activation 16.68
-Albite(low)                  -label h+
-Albite(low)                  -label oh-
-
-!Oxides
-Ilmenite                     -rate -14.60   -activation 15.82
-
-!Phosphate
-
-
-!! Secondary minerals
-
-Quartz(alpha)                -rate -13.99   -activation 20.96
-
+! Secondary minerals
 !amphibole
-Tremolite                    -rate -12.52  -activation 21.03
-Tremolite                    -label h+
-Actinolite                   -rate -12.52  -activation 21.03
-Actinolite                   -label h+
-
-!Brucite                      -rate -9.5   -activation
+Tremolite            -label default
+Tremolite            -label h+
 
 !serpentine
-Chrysotile                   -rate -12.52   -activation 21.03
-Chrysotile                   -label h+
-Talc                         -rate -12.52   -activation 21.03
-Talc                         -label h+
+Chrysotile            -label default
+Chrysotile            -label h+
+Talc                  -label default
+Talc                  -label h+
 
-Hematite                     -rate -14.6   -activation 15.82
+! Oxides
+!Hematite             1.0E-10  ssa 5d-3
+
+Quartz                -label h+
+Quartz                -label oh-
+
+! Mica
+Annite                -label default
+Annite                -label h+
+Annite                -label oh-
 
 !smectites
-!important clays
-Hsaponite(Mg)                 -rate -12.52   -activation 21.03
-Hsaponite(Mg)                 -label h+
-Celadonite                    -rate -12.52   -activation 21.03
+Saponite_Mg           -label default
+Saponite_Mg           -label h+
+Saponite_Mg           -label oh-
+Saponite_FeMg         -label default
+Saponite_FeMg         -label h+
+Saponite_FeMg         -label oh-
+
+! Illite
+Illite_Mg             -label default
+Illite_Mg             -label h+
+Illite_Mg             -label oh-
 
 !Epidotes
-Epidote                      -rate -12.52   -activation 21.03
-Epidote                      -label h+
-Clinozoisite                 -rate -12.52   -activation 21.03
-Clinozoisite                 -label h+
+Epidote               -label default
+Epidote               -label h+
+Epidote               -label oh-
+Zoisite               -label default
+Zoisite               -label h+
+Zoisite               -label oh-
 
 !Chlorites
-Chamosite(Daphnite)          -rate -12.52   -activation 21.03
-Chamosite(Daphnite)          -label h+
-Clinochlore                  -rate -12.52   -activation 21.03
-Clinochlore                  -label h+
+Chamosite-7A            -label default
+Chamosite-7A            -label h+
+Chamosite-7A            -label oh-
+Clinochlore-7A            -label default
+Clinochlore-7A            -label h+
+Clinochlore-7A            -label oh-
 
 !Na-Zeolites
-Natrolite                    -rate -12.52   -activation 21.03
+Analcime            -label default
+Analcime            -label h+
+Analcime            -label oh-
 
-!Pyrite
-!FeS(am)                      -rate -8.0   -activation 11.95
+!Hydroxides
+Gibbsite            -label default
+Gibbsite            -label h+
+Gibbsite            -label oh-
+Diaspore            -label default
+Diaspore            -label oh-
 
-!sulphates
-Anhydrite                    -rate -6.5   -activation 6.69
+!Sulphates
+Anhydrite           -label default
 
-Calcite                      -rate -6.74  -activation 15.77
-Calcite                      -label hco3-
-!Siderite                     -rate -9.5 
+!Carbonates
+Calcite             -label default
+Calcite             -label hco3-
 END
 
 POROSITY
@@ -239,7 +234,6 @@ END
 PRIMARY_SPECIES
 H+
 Al+++
-!NH4+
 O2(aq)
 Mg++
 Ca++
@@ -248,46 +242,39 @@ Fe+++
 HCO3-  
 Cl-
 K+
-!HS-  
 Na+
 SO4--
-!NO3
-H4SiO4(aq)
-Ti(OH)4(aq)
+SiO2(aq)
 END
  
 SECONDARY_SPECIES 
-!HNO3(aq)
-Al(OH)2+                                                                
-!Al(SO4)2-
-AlO2-                                                                   
+OH-
+Al(OH)2+
+AlO2-
 AlOH++
-CO3--  
-CO2(aq)                                                                  
-CaCl+                                                                
+CO3--
+CO2(aq)
+CaCl+
 CaCl2(aq)
-CaOH+                                                                 
-CaSO4(aq)                                                              
-FeCl+                                                                   
-FeCl2(aq)                                                               
-FeOH+                                                                   
-FeSO4(aq)    
-OH-     
-MgSO4(aq)
+!CaOH+
+CaSO4(aq)
+FeCl+
+FeCl2(aq)
+!FeOH+
+!FeSO4(aq)
+!MgSO4(aq)
 MgCO3(aq)
-
-!H2S(aq)
-HSO4-                                                                   
-HSiO3-                                                                  
-KCl(aq)                                                                 
-KOH(aq)                                                                 
-KSO4-                                                            
-NaOH(aq)                                                                
-NaSO4-
-H2(aq)                                                                 
+HSO4-
+HSiO3-
+KCl(aq)
+!KOH(aq)
+KSO4-
+NaOH(aq)
+!NaSO4-
 END
 
 GASES
+O2(g)
 CO2(g)
 END
  
