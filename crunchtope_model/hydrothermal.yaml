@@ -1,5 +1,5 @@
 # template can either be specified as either the relative or absolute path to the inputs.
-template: 'burn.in'
+template: 'hydrothermal.in'
 database: 'CrunchThermoddem.dbs'
 aqueous_database:
 catabolic_pathways:

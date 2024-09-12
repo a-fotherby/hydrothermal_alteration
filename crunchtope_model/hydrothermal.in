@@ -1,0 +1,302 @@
+TITLE
+Hydrothermal Fluid Flow in a 1D model
+END
+
+RUNTIME
+time_units                   years
+timestep_max                 2e-2
+timestep_init                1e-40
+time_tolerance               0.1
+correction_max               5.0
+debye-huckel                 true
+database_sweep               false
+speciate_only                false
+screen_output                50
+hindmarsh                    true
+gimrt                        true
+master                       H+
+database                     CrunchThermoddem.dbs
+graphics                     tecplot
+save_restart                 partial_equil.rst
+END
+
+DISCRETIZATION
+distance_units               meters
+xzones                       500   2.0
+END
+
+OUTPUT
+time_units                   years
+spatial_profile              1e-1 100 200 300 400 500 2000
+END
+
+CONDITION                    Initial
+!Seawater composition
+units                        mmol/kg
+pH                           8.15  
+temperature                  2.0
+Na+                          474
+Cl-                          charge
+Mg++                         52.8
+SO4--                        28.2
+Ca++                         10.3
+K+                           10.2
+HCO3-                        2.06
+Al+++                        0.037e-6   
+Fe+++                        1.0e-6
+Fe++                         1.0e-12
+O2(aq)                       1.0e-15
+SiO2(aq)                   0.17
+
+! SOLID PHASE
+!porosity = 0.1, total solid phase = 0.9
+
+! Primary minerals
+! Primary minerals
+!olivine, total (40%) Fo85 (Ben's paper)
+Forsterite           0.0415    ssa 1d-6  
+Fayalite             0.0070    ssa 1d-6  
+
+!CPX Di85 He1
+Diopside             0.315     ssa 1d-6  
+Hedenbergite         0.050     ssa 1d-6  
+
+!plagioclase An
+Anorthite            0.3825    ssa 1d-6  
+Albite               0.1625    ssa 1d-6  
+
+! Secondary minerals
+!amphibole
+Tremolite            1.0e-10   ssa 5d-3  1.0e-10
+
+!serpentine
+Chrysotile           1.0E-10   ssa 5d-3  1.0e-10
+Talc                 1.0E-10   ssa 5d-3  1.0e-10
+
+! Oxides
+!Hematite             1.0E-10  ssa 5d-3  1.0e-10
+
+Quartz               1.0E-10   ssa 5d-3  1.0e-10
+
+! Mica
+Annite               1.0E-10   ssa 5d-3  1.0e-10
+
+!smectite
+Saponite_Mg          1.0E-10   ssa 5d-3  1.0e-10
+Saponite_FeMg        1.0E-10 ssa   5d-3  1.0e-10
+
+! Illite
+Illite_Mg           1.0e-10    ssa 5d-3  1.0e-10
+
+!Epidotes                                1.0e-10
+Epidote              1.0e-10   ssa 5d-3  1.0e-10
+Zoisite              1.0e-10   ssa 5d-3  1.0e-10
+
+!Chlorite
+Chamosite-7A         1.0e-10   ssa 5d-3  1.0e-10
+Clinochlore-7A       1.0e-10   ssa 5d-3  1.0e-10
+
+!Na-Zeolites                             1.0e-10
+Analcime             1.0e-10   ssa 5d-3  1.0e-10
+
+!Hydroxide
+Gibbsite             1.0E-10   ssa 5d-3  1.0e-10
+Diaspore             1.0E-10   ssa 5d-3  1.0e-10
+
+!Sulphate
+Anhydrite            1.0E-10   ssa 5d-3  1.0e-10
+
+!Carbonate
+Calcite              1.0E-10   ssa 5d-3  1.0e-10
+END
+
+CONDITION                    Boundary
+!Seawater composition
+units                        mmol/kg
+pH                           8.15  
+temperature                  2.0
+Na+                          474
+Cl-                          charge
+Mg++                         52.8
+SO4--                        28.2
+Ca++                         10.3
+K+                           10.2
+HCO3-                        2.06
+Al+++                        0.037e-6
+Fe+++                        1.0e-6
+Fe++                         1.0e-12
+O2(aq)                       1.0e-15
+SiO2(aq)                   0.17
+END
+
+MINERALS
+! Primary minerals
+!olivine, total (40%) Fo85 (Ben's paper)
+Forsterite           -label oh-
+Forsterite           -label h+
+Fayalite             -label oh-
+Fayalite             -label h+
+
+!CPX Di85 He15
+Diopside             -label default
+Diopside             -label h+
+Hedenbergite         -label default
+Hedenbergite         -label h+ 
+
+!plagioclase An7
+Anorthite            -label default
+Anorthite            -label h+
+Anorthite            -label oh-
+Albite               -label default
+Albite               -label h+
+Albite               -label oh-
+
+! Secondary minerals
+!amphibole
+Tremolite            -label default
+Tremolite            -label h+
+
+!serpentine
+Chrysotile            -label default
+Chrysotile            -label h+
+Talc                  -label default
+Talc                  -label h+
+
+! Oxides
+!Hematite             1.0E-10  ssa 5d-3
+
+Quartz                -label h+
+Quartz                -label oh-
+
+! Mica
+Annite                -label default
+Annite                -label h+
+Annite                -label oh-
+
+!smectites
+Saponite_Mg           -label default
+Saponite_Mg           -label h+
+Saponite_Mg           -label oh-
+Saponite_FeMg         -label default
+Saponite_FeMg         -label h+
+Saponite_FeMg         -label oh-
+
+! Illite
+Illite_Mg             -label default
+Illite_Mg             -label h+
+Illite_Mg             -label oh-
+
+!Epidotes
+Epidote               -label default
+Epidote               -label h+
+Epidote               -label oh-
+Zoisite               -label default
+Zoisite               -label h+
+Zoisite               -label oh-
+
+!Chlorites
+Chamosite-7A            -label default
+Chamosite-7A            -label h+
+Chamosite-7A            -label oh-
+Clinochlore-7A            -label default
+Clinochlore-7A            -label h+
+Clinochlore-7A            -label oh-
+
+!Na-Zeolites
+Analcime            -label default
+Analcime            -label h+
+Analcime            -label oh-
+
+!Hydroxides
+Gibbsite            -label default
+Gibbsite            -label h+
+Gibbsite            -label oh-
+Diaspore            -label default
+Diaspore            -label oh-
+
+!Sulphates
+Anhydrite           -label default
+
+!Carbonates
+Calcite             -label default
+Calcite             -label hco3-
+END
+
+POROSITY
+porosity_update               false
+END
+
+INITIAL_CONDITIONS
+Initial                     1-500 1-1  1-1
+END
+
+PRIMARY_SPECIES
+H+
+Al+++
+O2(aq)
+Mg++
+Ca++
+Fe++
+Fe+++
+HCO3-  
+Cl-
+K+
+Na+
+SO4--
+SiO2(aq)
+END
+ 
+SECONDARY_SPECIES 
+OH-
+Al(OH)2+
+AlO2-
+AlOH++
+CO3--
+CO2(aq)
+CaCl+
+CaCl2(aq)
+!CaOH+
+CaSO4(aq)
+FeCl+
+FeCl2(aq)
+!FeOH+
+!FeSO4(aq)
+!MgSO4(aq)
+MgCO3(aq)
+HSO4-
+HSiO3-
+KCl(aq)
+!KOH(aq)
+KSO4-
+NaOH(aq)
+!NaSO4-
+END
+
+GASES
+O2(g)
+CO2(g)
+END
+ 
+BOUNDARY_CONDITIONS
+x_begin   Boundary     flux
+x_end     Boundary     flux
+END
+
+FLOW
+distance_units meters
+time_units   years
+constant_flow  2
+END
+
+TEMPERATURE
+read_temperaturefile     on_axis_temp.txt
+END
+
+TRANSPORT
+distance_units centimeters
+time_units  seconds
+calculate_diffusion 0.919e-05
+!diffusion_activation  4.5
+!cementation_exponent  2.0
+!dispersivity   0.004
+END
