@@ -6,6 +6,9 @@
 fort.123
 fort.3
 
+# Crunchtope output
+*.tec
+
 research/
 
 # Rhea files
