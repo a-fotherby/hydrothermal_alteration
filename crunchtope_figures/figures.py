@@ -21,99 +21,118 @@ def import_data(path, smalls_cats):
     return set1, datasets
 
 
-def font_properties():
-    from matplotlib.font_manager import FontProperties
+def syntheric_vars(primary_mineral_groups, secondary_mineral_groups, data): 
+    for group, minerals in primary_mineral_groups.items():
+        data = sum_variables(data, minerals, group)
 
-    font_props = FontProperties()
-    # font_props.set_name('sans_serif')
-    font_props.set_size(28)
-    font_props.set_weight('bold')
+    for group, minerals in secondary_mineral_groups.items():
+        data = sum_variables(data, minerals, group)
 
-    return font_props
+    data = sum_variables(data, primary_minerals, 'primary_minerals')
+    data = sum_variables(data, secondary_minerals, 'secondary_minerals')
+    data['percentage_alteration'] = data['secondary_minerals'] / data['primary_minerals'].isel(time=0) * 100
+
+    return data
 
 
-def synthetic_vars_ben_mins(data):
+def sum_variables(xarray_obj, var_names, new_var_name):
+    """
+    Sums specified variables in an xarray object element-wise and adds the result as a new variable.
+    
+    Parameters:
+    xarray_obj (xr.Dataset): The xarray Dataset containing the variables.
+    var_names (list of str): A list of variable names to sum.
+    new_var_name (str): The name of the new variable to store the sum.
+    
+    Returns:
+    xr.Dataset: The modified xarray Dataset with the new summed variable.
+    """
+
+    import xarray as xr
+    # Check if all variable names exist in the xarray object
+    missing_vars = [var for var in var_names if var not in xarray_obj.data_vars]
+    if missing_vars:
+        raise ValueError(f"The following variables are not in the xarray object: {missing_vars}")
+    
+    # Initialize a zero-filled DataArray based on the first variable's shape and coordinates
+    sum_var = xr.zeros_like(xarray_obj[var_names[0]])
+    
+    # Sum the variables element-wise
+    for var_name in var_names:
+        sum_var += xarray_obj[var_name]
+    
+    # Add the summed variable to the xarray object
+    xarray_obj[new_var_name] = sum_var
+    
+    return xarray_obj
+
+def old_mineral_groups():
+    primary_minerals = ['Forsterite', 'Fayalite', 'Microcline', 'Ferrosilite(al', 'Enstatite(alph', 'Diopside', 'Anorthite', 'Albite(low)', 'Ilmenite']
+    secondary_minerals = ['Hsaponite(Mg)', 'Clinochlore', 'Chamosite(Daph', 'Celadonite', 'Chrysotile', 'Talc', 'Actinolite', 'Tremolite', 'Epidote', 'Clinozoisite', 'Anhydrite', 'Calcite']
+
+    olivine = ['Forsterite', 'Fayalite']
+    feldspars = ['Microcline', 'Anorthite', 'Albite(low)']
+    clinopyroxenes = ['Diopside', 'Ferrosilite(al', 'Enstatite(alph']
     clays = ['Hsaponite(Mg)', 'Clinochlore', 'Chamosite(Daph', 'Celadonite']
-    basalt = ['Forsterite', 'Fayalite', 'Diopside', 'Hedenbergite', 'Anorthite', 'Albite(low)']
-    serp = ['Chrysotile', 'Talc']
-    amph = ['Actinolite', 'Tremolite']
+    serpentinites = ['Chrysotile', 'Talc']
+    amphiboles = ['Actinolite', 'Tremolite']
     epidote = ['Epidote', 'Clinozoisite']
-    calcite_components = ('Ca++', 'HCO3-')
+    sulfates = ['Anhydrite']
+    carbonates = ['Calcite']
 
-    min_groups = [clays, basalt, serp, amph, epidote]
-    group_names = ['Clays', 'Basalt', 'serp', 'amph', 'epidote']
+    primary_mineral_groups = {
+        'olivine': olivine,
+        'feldspars': feldspars,
+        'clinopyroxenes': clinopyroxenes
+    }
 
-    for group, name in zip(min_groups, group_names):
-        ds2 = sum(data['volume'][var] for var in group)
-        data['volume'] = data['volume'].assign({name: ds2})
+    secondary_mineral_groups = {
+        'clays': clays,
+        'serpentinites': serpentinites,
+        'amphiboles': amphiboles,
+        'epidote': epidote,
+        'sulfates': sulfates,
+        'carbonates': carbonates
+    }
 
-    return data
+    return primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups
 
+def new_mineral_groups():
+    primary_minerals = ['Anorthite', 'Albite', 'Diopside', 'Hedenbergite', 'Forsterite', 'Fayalite']
+    secondary_minerals = ['Tremolite', 'Chrysotile', 'Talc', 'Quartz', 'Saponite_Mg', 'Illite_Mg', 
+                        'Epidote', 'Zoisite', 'Chamosite-7A', 'Clinochlore-7A', 'Analcime', 
+                        'Anhydrite', 'Calcite', 'Gibbsite', 'Diaspore']
 
-def synthetic_vars(data):
-    clays = ('Hsaponite(Mg)', 'Clinochlore', 'Chamosite(Daph', 'Celadonite')
-    basalt = ('Forsterite', 'Fayalite', 'Microcline', 'Ferrosilite(al', 'Enstatite(alph', 'Diopside', 'Anorthite',
-              'Albite(low)', 'Ilmenite')
-    serp = ('Chrysotile', 'Talc')
-    amph = ('Actinolite', 'Tremolite')
-    epidote = ('Epidote', 'Clinozoisite')
-    calcite_components = ('Ca++', 'HCO3-')
+    clays = ['Saponite_Mg', 'Illite_Mg', 'Chamosite-7A', 'Clinochlore-7A']
+    zeolites = ['Analcime']
+    amphiboles = ['Tremolite']
+    serpentinites = ['Chrysotile', 'Talc']
+    epidotes = ['Epidote', 'Zoisite']
+    olivine = ['Forsterite', 'Fayalite']
+    clinopyroxenes = ['Diopside', 'Hedenbergite']
+    plagioclases = ['Anorthite', 'Albite']
+    sulfates = ['Anhydrite']
+    carbonates = ['Calcite']
+    hydroxides = ['Gibbsite', 'Diaspore']
 
-    min_groups = [clays, basalt, serp, amph, epidote]
-    group_names = ['Clays', 'Basalt', 'serp', 'amph', 'epidote']
+    secondary_mineral_groups = {
+        'clays': clays,
+        'zeolites': zeolites,
+        'amphiboles': amphiboles,
+        'serpentinites': serpentinites,
+        'epidotes': epidotes,
+        'sulfates': sulfates,
+        'carbonates': carbonates,
+        'hydroxides': hydroxides
+    }
 
-    for group, name in zip(min_groups, group_names):
-        ds2 = sum(data['volume'][var] for var in group)
-        data['volume'] = data['volume'].assign({name: ds2})
+    primary_mineral_groups = {
+        'olivine': olivine,
+        'clinopyroxenes': clinopyroxenes,
+        'plagioclases': plagioclases
+    }
 
-    return data
-
-
-def s_moles_to_flux(x):
-    import numpy as np
-    # Cast to float
-    x = np.array(x)
-    # Independent of model duration
-    mor_length = 65000e3  # m
-    spread_rate = 40e-3  # m/yr
-    mm_sulfur = 32.06  # g/mol
-
-    conversion = spread_rate * mor_length / 1e12
-
-    return x * conversion
-
-
-def s_flux_to_moles(x):
-    import numpy as np
-    # Cast to float
-    x = np.array(x)
-    # Independent of model duration
-    mor_length = 65000e3  # m
-    spread_rate = 40e-3  # m/yr
-    mm_sulfur = 32.06  # g/mol
-
-    conversion = spread_rate * mor_length / 1e12
-    return x / conversion
-
-
-def c_moles_to_flux(x):
-    # Independent of model duration
-    mor_length = 65000e3  # m
-    spread_rate = 40e-3  # m/yr
-    molar_mass = 12  # g/mol
-
-    conversion = spread_rate * mor_length * molar_mass / 1e12
-    return x * conversion
-
-
-def c_flux_to_moles(x):
-    # Independent of model duration
-    mor_length = 65000e3  # m
-    spread_rate = 40e-3  # m/yr
-    molar_mass = 12  # g/mol
-
-    conversion = spread_rate * mor_length * molar_mass / 1e12
-    return x / conversion
+    return primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups
 
 
 if __name__ == '__main__':
@@ -128,19 +147,19 @@ if __name__ == '__main__':
 
     # Import modules
     from coeus import helper as hp
-    from coeus import plots
     import xarray as xr
-    import numpy as np
 
     # Import data
     data = {}
     for category in args.categories:
-        data.update({category: xr.open_dataset(path, group=category)})
+        data.update({category: xr.open_dataset(args.file_name, group=category)})
 
-    # Generate new quantities
-    if args.file_name == 'original_mins_low_res_19-01-24.nc':
-        data = synthetic_vars(data)
-    else:
-        data = synthetic_vars_ben_mins(data)
+    if 'volume' in args.categories:
+        primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups = old_mineral_groups()
 
-    font_props = font_properties()
+        data['volume'] = syntheric_vars(primary_mineral_groups, secondary_mineral_groups, data['volume'])
+
+        print(f'Primary minerals: {primary_minerals}')
+        print(f'Secondary minerals: {secondary_minerals}')
+        print(f'Primary mineral groups: {primary_mineral_groups}')
+        print(f'Secondary mineral groups: {secondary_mineral_groups}')

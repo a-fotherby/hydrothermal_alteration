@@ -19,6 +19,7 @@ def syntheric_vars(primary_mineral_groups, secondary_mineral_groups, data):
         data = sum_variables(data, minerals, group + "_VF")
 
     for group, minerals in secondary_mineral_groups.items():
+        print(data['Diaspore_VF'])
         minerals = [string + "_VF" for string in minerals]
         data = sum_variables(data, minerals, group + "_VF")
 
@@ -69,7 +70,7 @@ def mineral_groups():
     primary_minerals = ['Anorthite', 'Albite', 'Diopside', 'Hedenbergite', 'Forsterite', 'Fayalite']
     secondary_minerals = ['Tremolite', 'Chrysotile', 'Talc', 'Quartz', 'Saponite_Mg', 'Illite_Mg', 
                         'Epidote', 'Zoisite', 'Chamosite-7A', 'Clinochlore-7A', 'Analcime', 
-                        'Anhydrite', 'Calcite']
+                        'Anhydrite', 'Calcite', 'Gibbsite', 'Diaspore']
 
     clays = ['Saponite_Mg', 'Illite_Mg', 'Chamosite-7A', 'Clinochlore-7A']
     zeolites = ['Analcime']
@@ -81,6 +82,7 @@ def mineral_groups():
     plagioclases = ['Anorthite', 'Albite']
     sulfates = ['Anhydrite']
     carbonates = ['Calcite']
+    hydroxides = ['Gibbsite', 'Diaspore']
 
     secondary_mineral_groups = {
         'clays': clays,
@@ -89,7 +91,8 @@ def mineral_groups():
         'serpentinites': serpentinites,
         'epidotes': epidotes,
         'sulfates': sulfates,
-        'carbonates': carbonates
+        'carbonates': carbonates,
+        'hydroxides': hydroxides
     }
 
     primary_mineral_groups = {
