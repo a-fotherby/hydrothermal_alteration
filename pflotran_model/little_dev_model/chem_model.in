@@ -378,7 +378,6 @@ CHEMISTRY
     Tremolite
 
     # Serpentine
-    Chrysotile
     Talc
 
     Hematite
@@ -390,10 +389,7 @@ CHEMISTRY
 
     # Smectites
     Saponite_Mg
-    Saponite_FeMg
 
-    #Illites
-    Illite_Mg
 
     # Epidotes
     Epidote
@@ -405,10 +401,6 @@ CHEMISTRY
 
     # Na-zeolites
     Analcime
-
-    #Hydroxides
-    Gibbsite
-    Diaspore
 
     Anhydrite
     Calcite
@@ -543,22 +535,6 @@ CHEMISTRY
     /
 
     # Serpentine
-    Chrysotile
-      VOLUME_FRACTION_EPSILON 1e-10
-      SURFACE_AREA_VOL_FRAC_POWER 0.66666667
-      PREFACTOR
-        RATE_CONSTANT -10.3d0
-        ACTIVATION_ENERGY 27.0d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA 0.25
-        /
-      /
-      PREFACTOR
-        RATE_CONSTANT -12.4d0
-        ACTIVATION_ENERGY 27.0d3 J/mol
-      /
-    /
-
     Talc
       VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
@@ -651,52 +627,6 @@ CHEMISTRY
       /
     /
 
-    Saponite_FeMg
-      VOLUME_FRACTION_EPSILON 1e-10
-      SURFACE_AREA_VOL_FRAC_POWER 0.66666667
-      PREFACTOR
-        RATE_CONSTANT -11.7d0
-        ACTIVATION_ENERGY 50.8d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA 0.55
-        /
-      /
-      PREFACTOR
-        RATE_CONSTANT -14.3d0
-        ACTIVATION_ENERGY 30.0d3 J/mol
-      /
-      PREFACTOR
-        RATE_CONSTANT -17.2d0
-        ACTIVATION_ENERGY 48.0d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA -0.3
-        /
-      /
-    /
-
-    # Illites
-    Illite_Mg
-      VOLUME_FRACTION_EPSILON 1e-10
-      SURFACE_AREA_VOL_FRAC_POWER 0.66666667
-      PREFACTOR
-        RATE_CONSTANT -11.9d0
-        ACTIVATION_ENERGY 50.0d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA 0.55
-        /
-      /
-      PREFACTOR
-        RATE_CONSTANT -14.68d0
-        ACTIVATION_ENERGY 70.0d3 J/mol
-      /
-      PREFACTOR
-        RATE_CONSTANT -20.19d0
-        ACTIVATION_ENERGY 74.0d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA -0.6
-        /
-      /
-    /
     # Epidotes
     Epidote
       VOLUME_FRACTION_EPSILON 1e-10
@@ -813,46 +743,6 @@ CHEMISTRY
       /
     /
 
-    #Hydroxides
-    Gibbsite
-      VOLUME_FRACTION_EPSILON 1e-10
-      SURFACE_AREA_VOL_FRAC_POWER 0.66666667
-      PREFACTOR
-        RATE_CONSTANT -7.65
-        ACTIVATION_ENERGY 47.5d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA 0.992
-        /
-      /
-      PREFACTOR
-        RATE_CONSTANT -11.5
-        ACTIVATION_ENERGY 61.2d3 J/mol
-      /
-      PREFACTOR
-        RATE_CONSTANT -16.65
-        ACTIVATION_ENERGY 80.1d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA -0.784
-        /
-      /
-    /
-
-    Diaspore
-      VOLUME_FRACTION_EPSILON 1e-10
-      SURFACE_AREA_VOL_FRAC_POWER 0.66666667
-      PREFACTOR
-        RATE_CONSTANT -13.33
-        ACTIVATION_ENERGY 47.5d3 J/mol
-      /
-      PREFACTOR
-        RATE_CONSTANT -23.60
-        ACTIVATION_ENERGY 47.5d3 J/mol
-        PREFACTOR_SPECIES H+
-          ALPHA -1.503
-        /
-      /
-    /
-
     Anhydrite
       VOLUME_FRACTION_EPSILON 1e-10
       SURFACE_AREA_VOL_FRAC_POWER 0.66666667
@@ -955,7 +845,6 @@ CONSTRAINT initial_constraint
     Tremolite            1.0e-10    5d-3 m^2/g
     
     #serpentine
-    Chrysotile           1.0E-10    5d-3 m^2/g
     Talc                 1.0E-10    5d-3 m^2/g
 
     # Oxides
@@ -968,10 +857,6 @@ CONSTRAINT initial_constraint
 
     #smectites
     Saponite_Mg          1.0E-10    5d-3 m^2/g
-    Saponite_FeMg          1.0E-10    5d-3 m^2/g
-
-    # Illite
-    Illite_Mg           1.0e-10    5d-3 m^2/g
 
     #Epidotes
     Epidote              1.0e-10    5d-3 m^2/g
@@ -983,10 +868,6 @@ CONSTRAINT initial_constraint
 
     #Na-Zeolites
     Analcime             1.0e-10    5d-3 m^2/g
-
-    #Hydroxides
-    Gibbsite             1.0E-10    5d-3 m^2/g
-    Diaspore             1.0E-10    5d-3 m^2/g
 
     #Sulphates
     Anhydrite            1.0E-10    5d-3 m^2/g
