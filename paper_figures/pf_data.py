@@ -19,7 +19,6 @@ def syntheric_vars(primary_mineral_groups, secondary_mineral_groups, data):
         data = sum_variables(data, minerals, group + "_VF")
 
     for group, minerals in secondary_mineral_groups.items():
-        print(data['Diaspore_VF'])
         minerals = [string + "_VF" for string in minerals]
         data = sum_variables(data, minerals, group + "_VF")
 
@@ -68,21 +67,20 @@ def sum_variables(xarray_obj, var_names, new_var_name):
 
 def mineral_groups():
     primary_minerals = ['Anorthite', 'Albite', 'Diopside', 'Hedenbergite', 'Forsterite', 'Fayalite']
-    secondary_minerals = ['Tremolite', 'Chrysotile', 'Talc', 'Quartz', 'Saponite_Mg', 'Illite_Mg', 
+    secondary_minerals = ['Tremolite', 'Talc', 'Quartz', 'Saponite_Mg', 
                         'Epidote', 'Zoisite', 'Chamosite-7A', 'Clinochlore-7A', 'Analcime', 
-                        'Anhydrite', 'Calcite', 'Gibbsite', 'Diaspore']
+                        'Anhydrite', 'Calcite']
 
-    clays = ['Saponite_Mg', 'Illite_Mg', 'Chamosite-7A', 'Clinochlore-7A']
+    clays = ['Saponite_Mg', 'Chamosite-7A', 'Clinochlore-7A']
     zeolites = ['Analcime']
     amphiboles = ['Tremolite']
-    serpentinites = ['Chrysotile', 'Talc']
+    serpentinites = ['Talc']
     epidotes = ['Epidote', 'Zoisite']
     olivine = ['Forsterite', 'Fayalite']
     clinopyroxenes = ['Diopside', 'Hedenbergite']
     plagioclases = ['Anorthite', 'Albite']
     sulfates = ['Anhydrite']
     carbonates = ['Calcite']
-    hydroxides = ['Gibbsite', 'Diaspore']
 
     secondary_mineral_groups = {
         'clays': clays,
@@ -92,7 +90,6 @@ def mineral_groups():
         'epidotes': epidotes,
         'sulfates': sulfates,
         'carbonates': carbonates,
-        'hydroxides': hydroxides
     }
 
     primary_mineral_groups = {
@@ -131,7 +128,7 @@ if __name__ == '__main__':
         data = pfl.h5_to_xarray(hdf)
 
     primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups = mineral_groups()
-    data = syntheric_vars(primary_mineral_groups, secondary_mineral_groups, data)
+    pf_data = syntheric_vars(primary_mineral_groups, secondary_mineral_groups, data)
 
     print(f'Primary minerals: {primary_minerals}')
     print(f'Secondary minerals: {secondary_minerals}')

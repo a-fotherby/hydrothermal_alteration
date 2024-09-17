@@ -10,6 +10,7 @@ fort.3
 *.tec
 
 research/
+__pycache__
 
 # Rhea files
 *.sh.*

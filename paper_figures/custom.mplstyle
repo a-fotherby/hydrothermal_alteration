@@ -1,0 +1,42 @@
+# Axes
+axes.titlesize   : 16        # Title font size
+axes.titleweight : bold      # Bold title
+axes.labelsize   : medium        # X and Y label font size
+axes.labelweight : bold      # Bold label
+
+# Lines
+lines.linewidth  : 2.5       # Bold lines
+lines.markersize : 8         # Larger markers for visibility
+
+# Ticks
+xtick.labelsize  : 12        # X-tick font size
+ytick.labelsize  : 12        # Y-tick font size
+xtick.major.width: 1.5       # Bold X-tick marks
+ytick.major.width: 1.5       # Bold Y-tick marks
+
+# Grid
+axes.grid        : False     # Disable gridlines
+
+# Grid settings explicitly turned off
+grid.color       : None      # Ensure grid color is None
+grid.linestyle   : None      # Ensure gridlines do not appear
+
+# Font
+font.family      : serif     # Use serif font for academic style
+font.weight      : bold      # Use bold font where possible for readability
+
+# Legend
+legend.fontsize  : 12        # Font size in legend
+legend.frameon   : True      # Draw a frame around the legend
+legend.framealpha: 1         # Make the legend background fully opaque
+legend.edgecolor : black     # Black border around legend
+legend.fancybox  : True      # Rounded corners for the legend
+
+# Figure
+figure.figsize   : 6, 4      # Default figure size (width, height)
+figure.dpi       : 300       # High resolution for publication
+
+# Savefig
+savefig.dpi      : 300       # High DPI for saved figures
+savefig.format   : pdf       # Default save format
+savefig.bbox     : tight     # Fit tightly around the figure to minimize white space

@@ -13,6 +13,51 @@ def initialise(file_name):
 
     return home, path
 
+def s_moles_to_flux(x):
+    import numpy as np
+    # Cast to float
+    x = np.array(x)
+    # Independent of model duration
+    mor_length = 65000e3  # m
+    spread_rate = 40e-3  # m/yr
+    mm_sulfur = 32.06  # g/mol
+
+    conversion = spread_rate * mor_length / 1e12
+
+    return x * conversion
+
+
+def s_flux_to_moles(x):
+    import numpy as np
+    # Cast to float
+    x = np.array(x)
+    # Independent of model duration
+    mor_length = 65000e3  # m
+    spread_rate = 40e-3  # m/yr
+    mm_sulfur = 32.06  # g/mol
+
+    conversion = spread_rate * mor_length / 1e12
+    return x / conversion
+
+
+def c_moles_to_flux(x):
+    # Independent of model duration
+    mor_length = 65000e3  # m
+    spread_rate = 40e-3  # m/yr
+    molar_mass = 12  # g/mol
+
+    conversion = spread_rate * mor_length * molar_mass / 1e12
+    return x * conversion
+
+
+def c_flux_to_moles(x):
+    # Independent of model duration
+    mor_length = 65000e3  # m
+    spread_rate = 40e-3  # m/yr
+    molar_mass = 12  # g/mol
+
+    conversion = spread_rate * mor_length * molar_mass / 1e12
+    return x / conversion
 
 def import_data(path, smalls_cats):
     set1 = hp.quick_import(path, smalls_cats=smalls_cats)
@@ -99,21 +144,18 @@ def old_mineral_groups():
 
 def new_mineral_groups():
     primary_minerals = ['Anorthite', 'Albite', 'Diopside', 'Hedenbergite', 'Forsterite', 'Fayalite']
-    secondary_minerals = ['Tremolite', 'Chrysotile', 'Talc', 'Quartz', 'Saponite_Mg', 'Illite_Mg', 
-                        'Epidote', 'Zoisite', 'Chamosite-7A', 'Clinochlore-7A', 'Analcime', 
-                        'Anhydrite', 'Calcite', 'Gibbsite', 'Diaspore']
+    secondary_minerals = ['Tremolite', 'Epidote', 'Zoisite', 'Chamosite-7A', 'Clinochlore-7A', 'Analcime', 'Anhydrite', 'Calcite']
 
-    clays = ['Saponite_Mg', 'Illite_Mg', 'Chamosite-7A', 'Clinochlore-7A']
+    clays = ['Saponite_Mg', 'Chamosite-7A', 'Clinochlore-7A']
     zeolites = ['Analcime']
     amphiboles = ['Tremolite']
-    serpentinites = ['Chrysotile', 'Talc']
+    serpentinites = ['Talc']
     epidotes = ['Epidote', 'Zoisite']
     olivine = ['Forsterite', 'Fayalite']
     clinopyroxenes = ['Diopside', 'Hedenbergite']
     plagioclases = ['Anorthite', 'Albite']
     sulfates = ['Anhydrite']
     carbonates = ['Calcite']
-    hydroxides = ['Gibbsite', 'Diaspore']
 
     secondary_mineral_groups = {
         'clays': clays,
@@ -123,7 +165,6 @@ def new_mineral_groups():
         'epidotes': epidotes,
         'sulfates': sulfates,
         'carbonates': carbonates,
-        'hydroxides': hydroxides
     }
 
     primary_mineral_groups = {
@@ -150,14 +191,14 @@ if __name__ == '__main__':
     import xarray as xr
 
     # Import data
-    data = {}
+    ct_data = {}
     for category in args.categories:
-        data.update({category: xr.open_dataset(args.file_name, group=category)})
+        ct_data.update({category: xr.open_dataset(args.file_name, group=category)})
 
     if 'volume' in args.categories:
-        primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups = old_mineral_groups()
+        primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups = new_mineral_groups()
 
-        data['volume'] = syntheric_vars(primary_mineral_groups, secondary_mineral_groups, data['volume'])
+        ct_data['volume'] = syntheric_vars(primary_mineral_groups, secondary_mineral_groups, ct_data['volume'])
 
         print(f'Primary minerals: {primary_minerals}')
         print(f'Secondary minerals: {secondary_minerals}')
