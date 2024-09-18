@@ -8,6 +8,7 @@ SIMULATION
     /
   /
   CHECKPOINT
+    FORMAT HDF5
   /
 END
 
@@ -15,10 +16,7 @@ SUBSURFACE
 
 #=========================== numerical methods ================================
 NUMERICAL_METHODS FLOW
-  NEWTON_SOLVER
-  /
 END
-
 
 # =========================== discretization ===================================
 GRID
@@ -40,8 +38,8 @@ END
 
 #=========================== Equation of state =================================
 EOS WATER
-  DENSITY IF97
-  ENTHALPY IF97
+  DENSITY DEFAULT
+  ENTHALPY DEFAULT
 END
 
 # =========================== material properties ==============================
@@ -139,7 +137,7 @@ END
 
 # =========================== times ==================================
 TIME
-  FINAL_TIME 10000.d0 y
+  FINAL_TIME 20000.d0 y
   MAXIMUM_TIMESTEP_SIZE 5000 y
 END
 
@@ -183,6 +181,13 @@ REGION reaction_zone
   FACE BOTTOM
 END
 
+REGION upwelling_wall
+  COORDINATES
+    0.d0  0.d0  0.d0
+    1  1.d2     1500
+  /
+  FACE WEST
+END
 
 REGION seafloor_in
   COORDINATES
@@ -208,11 +213,8 @@ FLOW_CONDITION initial
     TEMPERATURE DIRICHLET
   /
   DATUM 0 0.d0 1500.d0
-  LIQUID_PRESSURE 3.d7
-  TEMPERATURE 2
-  GRADIENT 
-     TEMPERATURE -6.67d-4 0 -0.2
-  /
+  LIQUID_PRESSURE 10.d7
+  TEMPERATURE 400
 END
 
 FLOW_CONDITION seafloor_out
@@ -220,7 +222,7 @@ FLOW_CONDITION seafloor_out
     LIQUID_PRESSURE DIRICHLET 
     ENERGY_FLUX NEUMANN
   /
-  LIQUID_PRESSURE 3.d7
+  LIQUID_PRESSURE 10.d7
   ENERGY_FLUX 0.0 W/m^2
 END
 
@@ -229,7 +231,7 @@ FLOW_CONDITION seafloor_in
     LIQUID_PRESSURE DIRICHLET 
     TEMPERATURE DIRICHLET
   /
-  LIQUID_PRESSURE 3.d7
+  LIQUID_PRESSURE 10.d7
   TEMPERATURE 2.d0
 END
 
@@ -238,10 +240,14 @@ FLOW_CONDITION magma_lens
     LIQUID_FLUX NEUMANN
     TEMPERATURE DIRICHLET
   /
-  TEMPERATURE 350.d0
+  TEMPERATURE DATASET temperature
   LIQUID_FLUX 0.d0
 END
 
+DATASET temperature
+  FILENAME temperature.h5
+  HDF5_DATASET_NAME temperature
+END
 
 # =========================== condition couplers ===============================
 # initial condition
@@ -267,6 +273,12 @@ BOUNDARY_CONDITION
   REGION reaction_zone
 END
 
+# left boundary condition
+BOUNDARY_CONDITION
+  FLOW_CONDITION magma_lens
+  REGION upwelling_wall
+END
+
 
 #=========================== stratigraphy couplers ============================
 STRATA
@@ -287,6 +299,5 @@ STRATA
   REGION low_perm
   MATERIAL low_perm
 END
-
 
 END_SUBSURFACE
