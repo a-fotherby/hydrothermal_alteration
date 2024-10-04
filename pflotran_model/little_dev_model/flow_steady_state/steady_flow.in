@@ -38,7 +38,7 @@ END
 
 #=========================== Equation of state =================================
 EOS WATER
-  DENSITY DEFAULT
+  DENSITY PLANAR
   ENTHALPY DEFAULT
 END
 
@@ -272,13 +272,6 @@ BOUNDARY_CONDITION
   FLOW_CONDITION magma_lens
   REGION reaction_zone
 END
-
-# left boundary condition
-BOUNDARY_CONDITION
-  FLOW_CONDITION magma_lens
-  REGION upwelling_wall
-END
-
 
 #=========================== stratigraphy couplers ============================
 STRATA
