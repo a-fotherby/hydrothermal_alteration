@@ -28,6 +28,9 @@ SUBSURFACE
 
 #=========================== numerical methods ================================
 NUMERICAL_METHODS FLOW
+  NEWTON_SOLVER
+    ITOL_UPDATE 1000
+  /
 END
 
 NUMERICAL_METHODS TRANSPORT
@@ -54,7 +57,7 @@ END
 
 #=========================== Equation of state =================================
 EOS WATER
-  DENSITY DEFAULT
+  DENSITY PLANAR
   ENTHALPY DEFAULT
 END
 
@@ -135,7 +138,7 @@ END
 OUTPUT
   SNAPSHOT_FILE
     FORMAT HDF5 
-    PERIODIC TIME 50 y
+    PERIODIC TIME 10 y
     VARIABLES
       TEMPERATURE
       LIQUID_PRESSURE
@@ -152,9 +155,9 @@ END
 
 # =========================== times ==================================
 TIME
-  FINAL_TIME 7000 y
-  MAXIMUM_TIMESTEP_SIZE 5000 y
-  #INITIAL_TIMESTEP_SIZE 1d-16 y
+  FINAL_TIME 1000 y
+  MAXIMUM_TIMESTEP_SIZE 1 y
+  INITIAL_TIMESTEP_SIZE 1d-28 y
 END
 
 # =========================== regions ==================================
@@ -197,14 +200,6 @@ REGION reaction_zone
   FACE BOTTOM
 END
 
-REGION upwelling_wall
-  COORDINATES
-    0.d0  0.d0  0.d0
-    1  1.d2     1500
-  /
-  FACE WEST
-END
-
 REGION seafloor
   COORDINATES
     0.00d0 0.d0  1499
@@ -239,7 +234,7 @@ FLOW_CONDITION initial
   /
   DATUM 0 0.d0 1500.d0
   LIQUID_PRESSURE 10.d7
-  TEMPERATURE 300
+  TEMPERATURE 600
 END
 
 FLOW_CONDITION seafloor_out
@@ -291,7 +286,7 @@ END
 
 BOUNDARY_CONDITION
   FLOW_CONDITION seafloor_out
-  TRANSPORT_CONDITION empty
+  TRANSPORT_CONDITION exit
   REGION seafloor_out
 END
 
@@ -300,13 +295,6 @@ BOUNDARY_CONDITION
   FLOW_CONDITION magma_lens
   TRANSPORT_CONDITION empty
   REGION reaction_zone
-END
-
-# left boundary condition
-BOUNDARY_CONDITION
-  FLOW_CONDITION magma_lens
-  TRANSPORT_CONDITION empty
-  REGION upwelling_wall
 END
 
 #=========================== stratigraphy couplers ============================
@@ -335,7 +323,7 @@ CHEMISTRY
   PRIMARY_SPECIES
     H+
     Al+++
-    O2(aq)
+   #O2(aq)
     Mg++
     Ca++
     Fe++
@@ -346,35 +334,30 @@ CHEMISTRY
     Na+
     SO4--
     SiO2(aq)
+    Tracer
+    Tracer_Age
   /
   SECONDARY_SPECIES
     OH-
     Al(OH)2+
-    AlO2-
     AlOH++
     CO3--
     CO2(aq)
-    CaCl+
     CaCl2(aq)
-    #CaOH+
     CaSO4(aq)
     FeCl+
     FeCl2(aq)
-    #FeOH+
-    #FeSO4(aq)
-    #MgSO4(aq)
     MgCO3(aq)
     HSO4-
     HSiO3-
     KCl(aq)
-    #KOH(aq)
+    KOH(aq)
     KSO4-
     NaOH(aq)
-    #NaSO4-
   /
   PASSIVE_GAS_SPECIES
-    CO2(g)
-    O2(g)
+    #CO2(g)
+    #O2(g)
   /
   MINERALS
     # Primary minerals
@@ -384,6 +367,7 @@ CHEMISTRY
     # CPX Di85 He15 
     Diopside
     Hedenbergite
+
     # Plagiocalse An70 
     Anorthite
     Albite
@@ -391,6 +375,10 @@ CHEMISTRY
     # Secondary minerals
     # Amphibole
     Tremolite
+
+    # Inosilicate
+    Wollastonite
+    Prehnite
 
     # Serpentine
     Talc
@@ -404,14 +392,15 @@ CHEMISTRY
 
     # Smectites
     Saponite_Mg
+    Vermiculite_Ca
 
     # Epidotes
     Epidote
     Zoisite
 
     # Chlorites
-    Chamosite-7A
-    Clinochlore-7A
+    Chamosite
+    Clinochlore
 
     # Na-zeolites
     Analcime
@@ -454,6 +443,7 @@ CHEMISTRY
         /
       /
     /
+
     # CPX Di85 He15 
     Diopside
       PREFACTOR
@@ -482,6 +472,7 @@ CHEMISTRY
         ACTIVATION_ENERGY 83.0d3 J/mol
       /
     /
+
     # Plagiocalse An70 
     Anorthite
       PREFACTOR
@@ -527,7 +518,6 @@ CHEMISTRY
     # Secondary minerals
     # Amphibole
     Tremolite
-      VOLUME_FRACTION_EPSILON 1e-10
       PREFACTOR
         RATE_CONSTANT -11.3d0
         ACTIVATION_ENERGY 50.0d3 J/mol
@@ -541,9 +531,51 @@ CHEMISTRY
       /
     /
 
+    # Inosilicate
+    Wollastonite
+      PREFACTOR
+        RATE_CONSTANT -6.79
+        ACTIVATION_ENERGY 56.0e3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.3
+        /
+      /
+      PREFACTOR
+        RATE_CONSTANT -11.9
+        ACTIVATION_ENERGY 43.2e3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -16.3
+        ACTIVATION_ENERGY 42.3e3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA -0.4
+        /
+      /
+    /
+
+    Prehnite
+      PREFACTOR
+        RATE_CONSTANT -10.4
+        ACTIVATION_ENERGY 77.0e3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.3
+        /
+      /
+      PREFACTOR
+        RATE_CONSTANT -14.0
+        ACTIVATION_ENERGY 80.0e3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -12.8
+        ACTIVATION_ENERGY 80.0e3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA -0.075
+        /
+      /
+    /
+
     # Serpentine
     Talc
-      VOLUME_FRACTION_EPSILON 1e-10
       PREFACTOR
         RATE_CONSTANT -11.1d0
         ACTIVATION_ENERGY 50.2d3 J/mol
@@ -566,7 +598,6 @@ CHEMISTRY
     #/
 
     Quartz
-      VOLUME_FRACTION_EPSILON 1e-10
       PREFACTOR
         RATE_CONSTANT -11.4d0
         ACTIVATION_ENERGY 45.6d3 J/mol
@@ -585,7 +616,6 @@ CHEMISTRY
 
     # Mica
     Annite
-      VOLUME_FRACTION_EPSILON 1e-10
       PREFACTOR
         RATE_CONSTANT -9.42d0
         ACTIVATION_ENERGY 18.2d3 J/mol
@@ -608,7 +638,27 @@ CHEMISTRY
 
     # Smectites
     Saponite_Mg
-      VOLUME_FRACTION_EPSILON 1e-10
+      PREFACTOR
+        RATE_CONSTANT -11.7d0
+        ACTIVATION_ENERGY 50.8d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA 0.55
+        /
+      /
+      PREFACTOR
+        RATE_CONSTANT -14.3d0
+        ACTIVATION_ENERGY 30.0d3 J/mol
+      /
+      PREFACTOR
+        RATE_CONSTANT -17.2d0
+        ACTIVATION_ENERGY 48.0d3 J/mol
+        PREFACTOR_SPECIES H+
+          ALPHA -0.3
+        /
+      /
+    /
+
+    Vermiculite_Ca
       PREFACTOR
         RATE_CONSTANT -11.7d0
         ACTIVATION_ENERGY 50.8d3 J/mol
@@ -631,7 +681,6 @@ CHEMISTRY
 
     # Epidotes
     Epidote
-      VOLUME_FRACTION_EPSILON 1e-10
       PREFACTOR
         RATE_CONSTANT -10.47d0
         ACTIVATION_ENERGY 60.0d3 J/mol
@@ -652,7 +701,6 @@ CHEMISTRY
       /
     /
     Zoisite
-      VOLUME_FRACTION_EPSILON 1e-10
       PREFACTOR
         RATE_CONSTANT -10.47d0
         ACTIVATION_ENERGY 60.0d3 J/mol
@@ -673,8 +721,7 @@ CHEMISTRY
       /
     /
     # Chlorites
-    Chamosite-7A
-      VOLUME_FRACTION_EPSILON 1e-10
+    Chamosite
       PREFACTOR
         RATE_CONSTANT -9.08d0
         ACTIVATION_ENERGY 30.0d3 J/mol
@@ -695,8 +742,7 @@ CHEMISTRY
       /
     /
 
-    Clinochlore-7A
-      VOLUME_FRACTION_EPSILON 1e-10
+    Clinochlore
       PREFACTOR
         RATE_CONSTANT -9.08d0
         ACTIVATION_ENERGY 30.0d3 J/mol
@@ -719,7 +765,6 @@ CHEMISTRY
 
     # Na-zeolites
     Analcime
-      VOLUME_FRACTION_EPSILON 1e-10
       PREFACTOR
         RATE_CONSTANT -3.3
         ACTIVATION_ENERGY 63.0d3 J/mol
@@ -741,15 +786,12 @@ CHEMISTRY
     /
 
     Anhydrite
-      VOLUME_FRACTION_EPSILON 1e-10
-      
       PREFACTOR
         RATE_CONSTANT -6.5d0
         ACTIVATION_ENERGY 28.0d3 J/mol
       /
     /
     Calcite
-      VOLUME_FRACTION_EPSILON 1e-10
       PREFACTOR
         RATE_CONSTANT -6.74d0
         ACTIVATION_ENERGY 66.0d3 J/mol
@@ -763,15 +805,20 @@ CHEMISTRY
       /
     /
   /
-  DATABASE thermo_300bars.dat
+  DATABASE thermo_500bars.dat
+  #UPDATE_POROSITY
+  MAXIMUM_REACTION_CUTS 100
   LOG_FORMULATION
-  ACTIVITY_COEFFICIENTS TIMESTEP
-  ACTIVITY_WATER TRUE
+  DECOUPLED_EQUILIBRIUM_REACTIONS
+    Fe+++
+    /
+  ACTIVITY_COEFFICIENTS OFF
+  ACTIVITY_WATER FALSE
   OUTPUT
     ALL
     TOTAL
     PH
-    MOLALITY
+    MOLARITY
     MINERAL_SATURATION_INDEX
     MINERAL_SURFACE_AREA
     AGE
@@ -795,6 +842,13 @@ TRANSPORT_CONDITION seafloor
 END
 
 TRANSPORT_CONDITION empty
+  TYPE MEMBRANE_FILTER
+  CONSTRAINT_LIST
+    0.d0 empty
+  /
+END
+
+TRANSPORT_CONDITION exit
   TYPE DIRICHLET_ZERO_GRADIENT
   CONSTRAINT_LIST
     0.d0 empty
@@ -807,66 +861,73 @@ CONSTRAINT initial_constraint
   CONCENTRATIONS
     H+          8.15     P
     Al+++       0.037d-9 T
-    O2(aq)      1.0d-18  T
+   #O2(aq)      1.0d-18  T
     Mg++        52.8d-3  T
     Ca++        10.3d-3  T
     Fe++        1.0d-15  T
     Fe+++       1.0d-9   T
     HCO3-       2.06d-3  T
-    Cl-         474d-3   Z
+    Cl-         536e-3   T
     K+          10.2d-3  T
     Na+         474d-3   T
     SO4--       28.2d-3  T
     SiO2(aq)    0.17d-3  T
+    Tracer      1e-32    T
+    Tracer_Age  1e-32    T
   /
   MINERALS
     # Primary minerals
     #olivine, total (40%) Fo85 (Ben's paper)
-    Forsterite           0.0415     1d-6 m^2/g
-    Fayalite             0.0070     1d-6 m^2/g
+    Forsterite           0.0415     1e-5
+    Fayalite             0.0070     1e-2
 
     #CPX Di85 He15
-    Diopside             0.315      1d-6 m^2/g
-    Hedenbergite         0.050      1d-6 m^2/g
+    Diopside             0.315      5e-5
+    Hedenbergite         0.050      1e-4
 
     #plagioclase An7
-    Anorthite            0.3825     1d-6 m^2/g
-    Albite               0.1625     1d-6 m^2/g
+    Anorthite            0.3825     2.75e-5
+    Albite               0.1625     1e1
 
     ## Secondary minerals
     #amphibole
-    Tremolite            1.0e-10    0 m^2/g
+    Tremolite            1.0e-10    1e-7
+
+    # Inosilicate 
+    Wollastonite         1.0e-10    1e-15
+    Prehnite             1.0e-10    1e-1
 
     #serpentine
-    Talc                 1.0E-10    0 m^2/g
+    Talc                 1.0E-10    1e-5
 
     # Oxides
     #Hematite             1.0E-10   00003 cm^2/g
 
-    Quartz               1.0E-10    0 m^2/g
+    Quartz               1.0E-10    1e1
 
     # Mica
-    Annite               1.0E-10    0 m^2/g
+    Annite               1.0E-10    1e1
 
     #smectites
-    Saponite_Mg          1.0E-10    0 m^2/g
+    Saponite_Mg          1.0E-10    1e-1
+    Vermiculite_Ca       1.0e-10    1e-10
 
     #Epidotes
-    Epidote              1.0e-10    0 m^2/g
-    Zoisite              1.0e-10    0 m^2/g
+    Epidote              1.0e-10    1e-3
+    Zoisite              1.0e-10    1e-3
 
     #Chlorites
-    Chamosite-7A         1.0e-10    0 m^2/g
-    Clinochlore-7A       1.0e-10    0 m^2/g
+    Chamosite         1.0e-10    1e2
+    Clinochlore       1.0e-10    1e-25
 
     #Na-Zeolites
-    Analcime             1.0e-10    0 m^2/g
+    Analcime             1.0e-10    1e-2
 
     #Sulphates
-    Anhydrite            1.0E-10    0 m^2/g
+    Anhydrite            1.0E-10    1e-6
 
     #Carbonates
-    Calcite              1.0E-10    0 m^2/g
+    Calcite              1.0E-10    1e-2
   /
 END
 
@@ -874,35 +935,56 @@ CONSTRAINT inlet_constraint
   CONCENTRATIONS
     H+          8.15     P
     Al+++       0.037d-9 T
-    O2(aq)      1.0d-18  T  
+   #O2(aq)      1.0d-18  T  
     Mg++        52.8d-3  T
     Ca++        10.3d-3  T
     Fe++        1.0d-15  T
     Fe+++       1.0d-9   T
     HCO3-       2.06d-3  T
-    Cl-         474d-3   Z
+    Cl-         536e-3   T
     K+          10.2d-3  T
     Na+         474d-3   T
     SO4--       28.2d-3  T
     SiO2(aq)    0.17d-3  T
+    Tracer      1e-16     T
+    Tracer_Age 1e-16    T
   /
 END
 
 CONSTRAINT empty
   CONCENTRATIONS
-    H+          1.d-50 T
-    Al+++       1.d-50 T
-    O2(aq)      1.d-50 T
-    Mg++        1.d-50 T
-    Ca++        1.d-50 T
-    Fe++        1.d-50 T
-    Fe+++       1.d-50 T
-    HCO3-       1.d-50 T
-    Cl-         1.d-50 T
-    K+          1.d-50 T
-    Na+         1.d-50 T
-    SO4--       1.d-50 T
-    SiO2(aq)    1.d-50 T
+    H+          1e-15 T
+    Al+++       1e-15 T
+   #O2(aq)      1e-15 T
+    Mg++        1e-15 T
+    Ca++        1e-15 T
+    Fe++        1e-15 T
+    Fe+++       1e-15 T
+    HCO3-       1e-15 T
+    Cl-         1e-15 T
+    K+          1e-15 T
+    Na+         1e-15 T
+    SO4--       1e-15 T
+    SiO2(aq)    1e-15 T
+    Tracer      1e-16 T
+    Tracer_Age 1e-16 T
+  /
+  FREE_ION_GUESS
+    H+          1e-15 
+    Al+++       1e-15 
+   #O2(aq)      1e-15 
+    Mg++        1e-15 
+    Ca++        1e-15 
+    Fe++        1e-15 
+    Fe+++       1e-15 
+    HCO3-       1e-15 
+    Cl-         1e-15 
+    K+          1e-15 
+    Na+         1e-15 
+    SO4--       1e-15 
+    SiO2(aq)    1e-15 
+    Tracer      1e-16
+    Tracer_Age 1e-16    
   /
 END
 
