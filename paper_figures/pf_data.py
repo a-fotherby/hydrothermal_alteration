@@ -67,13 +67,14 @@ def sum_variables(xarray_obj, var_names, new_var_name):
 
 def mineral_groups():
     primary_minerals = ['Anorthite', 'Albite', 'Diopside', 'Hedenbergite', 'Forsterite', 'Fayalite']
-    secondary_minerals = ['Tremolite', 'Talc', 'Quartz', 'Saponite_Mg', 
+    secondary_minerals = ['Tremolite', 'Prehnite', 'Talc', 'Quartz', 'Saponite_Mg', 
                         'Epidote', 'Zoisite', 'Chamosite', 'Clinochlore', 'Analcime', 
                         'Anhydrite', 'Calcite']
 
     clays = ['Saponite_Mg', 'Chamosite', 'Clinochlore']
     zeolites = ['Analcime']
     amphiboles = ['Tremolite']
+    inosilicates = ['Prehnite']
     serpentinites = ['Talc']
     epidotes = ['Epidote', 'Zoisite']
     olivine = ['Forsterite', 'Fayalite']
@@ -86,6 +87,7 @@ def mineral_groups():
         'clays': clays,
         'zeolites': zeolites,
         'amphiboles': amphiboles,
+        'inosilicates': inosilicates,
         'serpentinites': serpentinites,
         'epidotes': epidotes,
         'sulfates': sulfates,
@@ -125,12 +127,15 @@ if __name__ == '__main__':
 
     # Open the HDF5 file in read mode
     with h5py.File(path, 'r') as hdf:
-        data = pfl.h5_to_xarray(hdf)
+        pf_data = pfl.h5_to_xarray(hdf)
 
-    primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups = mineral_groups()
-    pf_data = syntheric_vars(primary_mineral_groups, secondary_mineral_groups, data)
+    try:
+        primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups = mineral_groups()
+        pf_data = syntheric_vars(primary_mineral_groups, secondary_mineral_groups, pf_data)
+        print(f'Primary minerals: {primary_minerals}')
+        print(f'Secondary minerals: {secondary_minerals}')
+        print(f'Primary mineral groups: {primary_mineral_groups}')
+        print(f'Secondary mineral groups: {secondary_mineral_groups}')
+    except ValueError as e:
+        print(f'Error: {e}. Mineral not found.')
 
-    print(f'Primary minerals: {primary_minerals}')
-    print(f'Secondary minerals: {secondary_minerals}')
-    print(f'Primary mineral groups: {primary_mineral_groups}')
-    print(f'Secondary mineral groups: {secondary_mineral_groups}')
