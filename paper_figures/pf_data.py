@@ -75,7 +75,7 @@ def mineral_groups():
     zeolites = ['Analcime']
     amphiboles = ['Tremolite']
     inosilicates = ['Prehnite']
-    serpentinites = ['Talc']
+    talc = ['Talc']
     epidotes = ['Epidote', 'Zoisite']
     olivine = ['Forsterite', 'Fayalite']
     clinopyroxenes = ['Diopside', 'Hedenbergite']
@@ -88,7 +88,7 @@ def mineral_groups():
         'zeolites': zeolites,
         'amphiboles': amphiboles,
         'inosilicates': inosilicates,
-        'serpentinites': serpentinites,
+        'talc': talc,
         'epidotes': epidotes,
         'sulfates': sulfates,
         'carbonates': carbonates,
