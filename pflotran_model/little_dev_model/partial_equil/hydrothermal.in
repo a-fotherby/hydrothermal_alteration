@@ -8,13 +8,10 @@ SIMULATION
     /
     SUBSURFACE_TRANSPORT transport
       MODE GIRT
-      OPTIONS
-        SKIP_RESTART
-      /
     /
   /
   RESTART
-    FILENAME steady_flow-restart.h5
+    FILENAME partial_equil-restart.h5
     RESET_TO_TIME_ZERO
   /
   CHECKPOINT
@@ -155,7 +152,7 @@ END
 
 # =========================== times ==================================
 TIME
-  FINAL_TIME 5 y
+  FINAL_TIME 1000 y
   MAXIMUM_TIMESTEP_SIZE 1 y
   INITIAL_TIMESTEP_SIZE 1d-28 y
 END
@@ -860,7 +857,7 @@ CONSTRAINT initial_constraint
 
     ## Secondary minerals
     #amphibole
-    Tremolite            1.0e-10    1e-7
+    Tremolite            1.0e-10    5e-2
 
     # Inosilicate 
     Prehnite             1.0e-10    5e-2
@@ -885,7 +882,7 @@ CONSTRAINT initial_constraint
 
     #Chlorites
     Chamosite         1.0e-10    5e-2
-    Clinochlore       1.0e-10    1e-25
+    Clinochlore       1.0e-10    5e-2
 
     #Na-Zeolites
     Analcime             1.0e-10    5e-2
