@@ -1,9 +1,9 @@
 # template can either be specified as either the relative or absolute path to the inputs.
-template: 'partial_equil.in'
+template: 'hydrothermal.in'
 database: 'thermo_500bars.dat'
 aqueous_database:
 catabolic_pathways:
-restart_file: 'steady_flow-restart.h5'
+restart_file: 'partial_equil-restart.h5'
 
 # Timeout in seconds for any one input file.
 timeout: 734400
