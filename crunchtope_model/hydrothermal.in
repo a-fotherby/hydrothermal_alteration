@@ -15,14 +15,16 @@ screen_output                50
 hindmarsh                    true
 gimrt                        true
 master                       H+
-database                     CrunchThermoddem.dbs
+database                     thermo_500bars.dat
 graphics                     tecplot
 save_restart                 partial_equil.rst
 END
 
 DISCRETIZATION
 distance_units               meters
-xzones                       500   2.0
+xzones                       500   3.0
+yzones                       1     100
+zzones                       1     46.875
 END
 
 OUTPUT
@@ -42,11 +44,11 @@ SO4--                        28.2
 Ca++                         10.3
 K+                           10.2
 HCO3-                        2.06
-Al+++                        0.037e-6   
+Al+++                        0.037e-6
 Fe+++                        1.0e-6
 Fe++                         1.0e-12
 O2(aq)                       1.0e-15
-SiO2(aq)                   0.17
+SiO2(aq)                     0.17
 
 ! SOLID PHASE
 !porosity = 0.1, total solid phase = 0.9
@@ -54,60 +56,48 @@ SiO2(aq)                   0.17
 ! Primary minerals
 ! Primary minerals
 !olivine, total (40%) Fo85 (Ben's paper)
-Forsterite           0.0415    ssa 1d-6  
-Fayalite             0.0070    ssa 1d-6  
+Forsterite           0.0415    bsa  1e-5  
+Fayalite             0.0070    bsa  1e-2
 
 !CPX Di85 He1
-Diopside             0.315     ssa 1d-6  
-Hedenbergite         0.050     ssa 1d-6  
+Diopside             0.315     bsa  5e-5  
+Hedenbergite         0.050     bsa  1e-4
 
 !plagioclase An
-Anorthite            0.3825    ssa 1d-6  
-Albite               0.1625    ssa 1d-6  
+Anorthite            0.3825    bsa  2.75e-5  
+Albite               0.1625    bsa  1e1
 
 ! Secondary minerals
 !amphibole
-Tremolite            1.0e-10   ssa 5d-3  1.0e-10
+Tremolite            1.0e-10   bsa 5e-2
 
 !serpentine
-Chrysotile           1.0E-10   ssa 5d-3  1.0e-10
-Talc                 1.0E-10   ssa 5d-3  1.0e-10
+Talc                 1.0E-10   bsa 5e-2
 
-! Oxides
-!Hematite             1.0E-10  ssa 5d-3  1.0e-10
-
-Quartz               1.0E-10   ssa 5d-3  1.0e-10
+Quartz               1.0E-10   bsa 5e-2
 
 ! Mica
-Annite               1.0E-10   ssa 5d-3  1.0e-10
+Annite               1.0E-10   bsa 5e-2
 
 !smectite
-Saponite_Mg          1.0E-10   ssa 5d-3  1.0e-10
-Saponite_FeMg        1.0E-10 ssa   5d-3  1.0e-10
+Saponite_Mg          1.0E-10   bsa 5e-2
 
-! Illite
-Illite_Mg           1.0e-10    ssa 5d-3  1.0e-10
-
-!Epidotes                                1.0e-10
-Epidote              1.0e-10   ssa 5d-3  1.0e-10
-Zoisite              1.0e-10   ssa 5d-3  1.0e-10
+!Epidotes                            
+Epidote              1.0e-10   bsa 5e-2
+Zoisite              1.0e-10   bsa 5e-2
 
 !Chlorite
-Chamosite-7A         1.0e-10   ssa 5d-3  1.0e-10
-Clinochlore-7A       1.0e-10   ssa 5d-3  1.0e-10
+Chamosite         1.0e-10   bsa 5e-2
+Clinochlore       1.0e-10   bsa 5e-2
 
-!Na-Zeolites                             1.0e-10
-Analcime             1.0e-10   ssa 5d-3  1.0e-10
-
-!Hydroxide
-Gibbsite             1.0E-10   ssa 5d-3  1.0e-10
-Diaspore             1.0E-10   ssa 5d-3  1.0e-10
+!Na-Zeolites                             
+!Analcime             1.0e-10   bsa 5e-2
 
 !Sulphate
-Anhydrite            1.0E-10   ssa 5d-3  1.0e-10
+Anhydrite            1.0E-10   bsa 5e-2
 
 !Carbonate
-Calcite              1.0E-10   ssa 5d-3  1.0e-10
+Calcite              1.0E-10   bsa 5e-2
 END
 
 CONDITION                    Boundary
@@ -156,14 +146,14 @@ Albite               -label oh-
 Tremolite            -label default
 Tremolite            -label h+
 
+! Inosilicates
+Prehnite              -label default
+Prehnite              -label h+
+Prehnite              -label oh-
+
 !serpentine
-Chrysotile            -label default
-Chrysotile            -label h+
 Talc                  -label default
 Talc                  -label h+
-
-! Oxides
-!Hematite             1.0E-10  ssa 5d-3
 
 Quartz                -label h+
 Quartz                -label oh-
@@ -177,14 +167,6 @@ Annite                -label oh-
 Saponite_Mg           -label default
 Saponite_Mg           -label h+
 Saponite_Mg           -label oh-
-Saponite_FeMg         -label default
-Saponite_FeMg         -label h+
-Saponite_FeMg         -label oh-
-
-! Illite
-Illite_Mg             -label default
-Illite_Mg             -label h+
-Illite_Mg             -label oh-
 
 !Epidotes
 Epidote               -label default
@@ -195,24 +177,17 @@ Zoisite               -label h+
 Zoisite               -label oh-
 
 !Chlorites
-Chamosite-7A            -label default
-Chamosite-7A            -label h+
-Chamosite-7A            -label oh-
-Clinochlore-7A            -label default
-Clinochlore-7A            -label h+
-Clinochlore-7A            -label oh-
+Chamosite            -label default
+Chamosite            -label h+
+Chamosite            -label oh-
+Clinochlore            -label default
+Clinochlore            -label h+
+Clinochlore            -label oh-
 
 !Na-Zeolites
 Analcime            -label default
 Analcime            -label h+
 Analcime            -label oh-
-
-!Hydroxides
-Gibbsite            -label default
-Gibbsite            -label h+
-Gibbsite            -label oh-
-Diaspore            -label default
-Diaspore            -label oh-
 
 !Sulphates
 Anhydrite           -label default
@@ -233,12 +208,11 @@ END
 PRIMARY_SPECIES
 H+
 Al+++
-O2(aq)
 Mg++
 Ca++
 Fe++
 Fe+++
-HCO3-  
+HCO3-
 Cl-
 K+
 Na+
@@ -249,34 +223,22 @@ END
 SECONDARY_SPECIES 
 OH-
 Al(OH)2+
-AlO2-
 AlOH++
 CO3--
 CO2(aq)
-CaCl+
 CaCl2(aq)
-!CaOH+
 CaSO4(aq)
 FeCl+
 FeCl2(aq)
-!FeOH+
-!FeSO4(aq)
-!MgSO4(aq)
 MgCO3(aq)
 HSO4-
 HSiO3-
 KCl(aq)
-!KOH(aq)
+KOH(aq)
 KSO4-
 NaOH(aq)
-!NaSO4-
 END
 
-GASES
-O2(g)
-CO2(g)
-END
- 
 BOUNDARY_CONDITIONS
 x_begin   Boundary     flux
 x_end     Boundary     flux
@@ -285,7 +247,7 @@ END
 FLOW
 distance_units meters
 time_units   years
-constant_flow  2
+constant_flow  0.135
 END
 
 TEMPERATURE
@@ -296,7 +258,4 @@ TRANSPORT
 distance_units centimeters
 time_units  seconds
 calculate_diffusion 0.919e-05
-!diffusion_activation  4.5
-!cementation_exponent  2.0
-!dispersivity   0.004
 END
