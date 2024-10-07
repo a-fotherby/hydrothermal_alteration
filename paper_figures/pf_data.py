@@ -138,4 +138,5 @@ if __name__ == '__main__':
         print(f'Secondary mineral groups: {secondary_mineral_groups}')
     except ValueError as e:
         print(f'Error: {e}. Mineral not found.')
+        print('Assuming flow only simulation, data available.')
 
