@@ -845,22 +845,10 @@ CONSTRAINT initial_constraint
     #plagioclase An7
     Anorthite            0.3825     2.75e-5
     Albite               0.1625     1e1
-    skip
-    Forsterite           0.0415     1e-6
-    Fayalite             0.0070     1e-6
-
-    #CPX Di85 He15
-    Diopside             0.315      1e-6
-    Hedenbergite         0.050      1e-6
-
-    #plagioclase An7
-    Anorthite            0.3825     1e-6
-    Albite               0.1625     1e-6
-    noskip
 
     ## Secondary minerals
     #amphibole
-    Tremolite            1.0e-10    1e-7
+    Tremolite            1.0e-10    1e-8
 
     # Inosilicate 
     Prehnite             1.0e-10    5e-2
@@ -935,23 +923,6 @@ CONSTRAINT empty
     SiO2(aq)    1e-15 T
     Tracer      1e-16 T
     Tracer_Age 1e-16 T
-  /
-  FREE_ION_GUESS
-    H+          1e-15 
-    Al+++       1e-15 
-   #O2(aq)      1e-15 
-    Mg++        1e-15 
-    Ca++        1e-15 
-    Fe++        1e-15 
-    Fe+++       1e-15 
-    HCO3-       1e-15 
-    Cl-         1e-15 
-    K+          1e-15 
-    Na+         1e-15 
-    SO4--       1e-15 
-    SiO2(aq)    1e-15 
-    Tracer      1e-16
-    Tracer_Age 1e-16    
   /
 END
 
