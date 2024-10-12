@@ -105,8 +105,8 @@ def mineral_groups():
 
 if __name__ == '__main__':
     import argparse
-    import os
     from pathlib import Path
+    import xarray as xr
     import sys
 
     module_path = Path('/home/angus/work/Omphalos')
@@ -127,7 +127,10 @@ if __name__ == '__main__':
 
     # Open the HDF5 file in read mode
     with h5py.File(path, 'r') as hdf:
-        pf_data = pfl.h5_to_xarray(hdf)
+        try:
+            pf_data = pfl.h5_to_xarray(hdf)
+        except:
+            pf_data = xr.open_dataset(path)
 
     try:
         primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups = mineral_groups()
