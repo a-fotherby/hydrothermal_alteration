@@ -4,11 +4,11 @@ END
 
 RUNTIME
 time_units                   years
-timestep_max                 2e-5
+timestep_max                 1e-3
 timestep_init                1e-40
-time_tolerance               0.1
+time_tolerance               0.0001
 correction_max               5.0
-debye-huckel                 true
+debye-huckel                 false
 database_sweep               false
 speciate_only                false
 screen_output                50
@@ -17,7 +17,7 @@ gimrt                        true
 master                       H+
 database                     thermo_500bars.dat
 graphics                     tecplot
-restart                      partial_equil.rst
+save_restart                 partial_equil.rst
 END
 
 DISCRETIZATION
@@ -29,7 +29,8 @@ END
 
 OUTPUT
 time_units                   years
-spatial_profile              1e-1 100 200 300 400 500 600 700 800 900 1000
+!spatial_profile              1e-1 100 200 300 400 500 600 700 800 900 1000
+spatial_profile              1e-1 1 2 3 4 5
 END
 
 CONDITION                    Initial
@@ -47,7 +48,6 @@ HCO3-                        2.06
 Al+++                        0.037e-6
 Fe+++                        1.0e-6
 Fe++                         1.0e-12
-O2(aq)                       1.0e-15
 SiO2(aq)                     0.17
 
 ! SOLID PHASE
@@ -69,35 +69,35 @@ Albite               0.1625    bsa  1e1
 
 ! Secondary minerals
 !amphibole
-Tremolite            1.0e-10   bsa 5e-2
+Tremolite            1.0e-10   bsa 1e-7
 
 !serpentine
-Talc                 1.0E-10   bsa 5e-2
+Talc                 1.0E-10   bsa  5e-2
 
-Quartz               1.0E-10   bsa 5e-2
+Quartz               1.0E-10   bsa  5e-2
 
 ! Mica
-Annite               1.0E-10   bsa 5e-2
+Annite               1.0E-10   bsa  5e-2
 
 !smectite
-Saponite_Mg          1.0E-10   bsa 5e-2
+Saponite_Mg          1.0E-10   bsa  5e-2
 
 !Epidotes                            
-Epidote              1.0e-10   bsa 5e-2
-Zoisite              1.0e-10   bsa 5e-2
+Epidote              1.0e-10   bsa  5e-2
+Zoisite              1.0e-10   bsa  5e-2
 
 !Chlorite
-Chamosite         1.0e-10   bsa 5e-2
-Clinochlore       1.0e-10   bsa 5e-2
+Chamosite         1.0e-10   bsa  5e-2
+Clinochlore       1.0e-10   bsa 1e-26
 
 !Na-Zeolites                             
-!Analcime             1.0e-10   bsa 5e-2
+!Analcime             1.0e-10   bsa  5e-2
 
 !Sulphate
-Anhydrite            1.0E-10   bsa 5e-2
+Anhydrite            1.0E-10   bsa  5e-2
 
 !Carbonate
-Calcite              1.0E-10   bsa 5e-2
+Calcite              1.0E-10   bsa  5e-2
 END
 
 CONDITION                    Boundary
@@ -115,7 +115,6 @@ HCO3-                        2.06
 Al+++                        0.037e-6
 Fe+++                        1.0e-6
 Fe++                         1.0e-12
-O2(aq)                       1.0e-15
 SiO2(aq)                   0.17
 END
 
