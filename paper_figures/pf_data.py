@@ -69,19 +69,21 @@ def mineral_groups():
     primary_minerals = ['Anorthite', 'Albite', 'Diopside', 'Hedenbergite', 'Forsterite', 'Fayalite']
     secondary_minerals = ['Tremolite', 'Prehnite', 'Talc', 'Quartz', 'Saponite_Mg', 
                         'Epidote', 'Zoisite', 'Chamosite', 'Clinochlore', 'Analcime', 
-                        'Anhydrite', 'Calcite']
+                        'Anhydrite', 'Calcite', 'Annite']
 
     clays = ['Saponite_Mg', 'Chamosite', 'Clinochlore']
     zeolites = ['Analcime']
     amphiboles = ['Tremolite']
     inosilicates = ['Prehnite']
     talc = ['Talc']
+    mica = ['Annite']
     epidotes = ['Epidote', 'Zoisite']
     olivine = ['Forsterite', 'Fayalite']
     clinopyroxenes = ['Diopside', 'Hedenbergite']
     plagioclases = ['Anorthite', 'Albite']
     sulfates = ['Anhydrite']
     carbonates = ['Calcite']
+    quartz = ['Quartz']
 
     secondary_mineral_groups = {
         'clays': clays,
@@ -92,6 +94,8 @@ def mineral_groups():
         'epidotes': epidotes,
         'sulfates': sulfates,
         'carbonates': carbonates,
+        'quartz': quartz,
+        'mica': mica
     }
 
     primary_mineral_groups = {

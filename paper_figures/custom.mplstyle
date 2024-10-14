@@ -40,3 +40,6 @@ figure.dpi       : 300       # High resolution for publication
 savefig.dpi      : 300       # High DPI for saved figures
 savefig.format   : pdf       # Default save format
 savefig.bbox     : tight     # Fit tightly around the figure to minimize white space
+
+axes.prop_cycle: cycler('color', ['FF9999', '66B2FF', '99FF99', 'FFCC99', 'FFD700', 'FF69B4', 'B2B2FF', 'FFB347', '77DD77', 'FF6347', '40E0D0', 'F49AC2'])
+
