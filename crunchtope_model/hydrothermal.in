@@ -239,6 +239,9 @@ KSO4-
 NaOH(aq)
 END
 
+GASES
+END
+
 BOUNDARY_CONDITIONS
 x_begin   Boundary     flux
 x_end     Boundary     flux
