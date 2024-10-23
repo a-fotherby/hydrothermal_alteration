@@ -111,60 +111,38 @@ def sum_variables(xarray_obj, var_names, new_var_name):
     
     return xarray_obj
 
-def old_mineral_groups():
-    primary_minerals = ['Forsterite', 'Fayalite', 'Microcline', 'Ferrosilite(al', 'Enstatite(alph', 'Diopside', 'Anorthite', 'Albite(low)', 'Ilmenite']
-    secondary_minerals = ['Hsaponite(Mg)', 'Clinochlore', 'Chamosite(Daph', 'Celadonite', 'Chrysotile', 'Talc', 'Actinolite', 'Tremolite', 'Epidote', 'Clinozoisite', 'Anhydrite', 'Calcite']
 
-    olivine = ['Forsterite', 'Fayalite']
-    feldspars = ['Microcline', 'Anorthite', 'Albite(low)']
-    clinopyroxenes = ['Diopside', 'Ferrosilite(al', 'Enstatite(alph']
-    clays = ['Hsaponite(Mg)', 'Clinochlore', 'Chamosite(Daph', 'Celadonite']
-    serpentinites = ['Chrysotile', 'Talc']
-    amphiboles = ['Actinolite', 'Tremolite']
-    epidote = ['Epidote', 'Clinozoisite']
-    sulfates = ['Anhydrite']
-    carbonates = ['Calcite']
-
-    primary_mineral_groups = {
-        'olivine': olivine,
-        'feldspars': feldspars,
-        'clinopyroxenes': clinopyroxenes
-    }
-
-    secondary_mineral_groups = {
-        'clays': clays,
-        'serpentinites': serpentinites,
-        'amphiboles': amphiboles,
-        'epidote': epidote,
-        'sulfates': sulfates,
-        'carbonates': carbonates
-    }
-
-    return primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups
-
-def new_mineral_groups():
+def mineral_groups():
     primary_minerals = ['Anorthite', 'Albite', 'Diopside', 'Hedenbergite', 'Forsterite', 'Fayalite']
-    secondary_minerals = ['Tremolite', 'Epidote', 'Zoisite', 'Chamosite-7A', 'Clinochlore-7A', 'Analcime', 'Anhydrite', 'Calcite']
+    secondary_minerals = ['Tremolite', 'Prehnite', 'Talc', 'Quartz', 'Saponite_Mg', 
+                        'Epidote', 'Zoisite', 'Chamosite', 'Clinochlore', 'Analcime', 
+                        'Anhydrite', 'Calcite', 'Annite']
 
-    clays = ['Saponite_Mg', 'Chamosite-7A', 'Clinochlore-7A']
+    clays = ['Saponite_Mg', 'Chamosite', 'Clinochlore']
     zeolites = ['Analcime']
     amphiboles = ['Tremolite']
-    serpentinites = ['Talc']
+    inosilicates = ['Prehnite']
+    talc = ['Talc']
+    mica = ['Annite']
     epidotes = ['Epidote', 'Zoisite']
     olivine = ['Forsterite', 'Fayalite']
     clinopyroxenes = ['Diopside', 'Hedenbergite']
     plagioclases = ['Anorthite', 'Albite']
     sulfates = ['Anhydrite']
     carbonates = ['Calcite']
+    quartz = ['Quartz']
 
     secondary_mineral_groups = {
         'clays': clays,
         'zeolites': zeolites,
         'amphiboles': amphiboles,
-        'serpentinites': serpentinites,
+        'inosilicates': inosilicates,
+        'talc': talc,
         'epidotes': epidotes,
         'sulfates': sulfates,
         'carbonates': carbonates,
+        'quartz': quartz,
+        'mica': mica
     }
 
     primary_mineral_groups = {
@@ -196,7 +174,7 @@ if __name__ == '__main__':
         ct_data.update({category: xr.open_dataset(args.file_name, group=category)})
 
     if 'volume' in args.categories:
-        primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups = new_mineral_groups()
+        primary_minerals, secondary_minerals, primary_mineral_groups, secondary_mineral_groups = mineral_groups()
 
         ct_data['volume'] = syntheric_vars(primary_mineral_groups, secondary_mineral_groups, ct_data['volume'])
 
