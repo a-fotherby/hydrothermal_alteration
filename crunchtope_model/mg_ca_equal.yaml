@@ -1,11 +1,11 @@
 # template can either be specified as either the relative or absolute path to the inputs.
-template: 'burn.in'
-database: 'CrunchThermoddem.dbs'
+template: 'hydrothermal.in'
+database: 'thermo_500bars.dat'
 aqueous_database:
 catabolic_pathways:
 
 # Timeout in seconds for any one input file.
-timeout: 734400
+timeout: 73440000
 # conditions must match geochemical condition names in concentration dict
 conditions:
     - 'Boundary'
