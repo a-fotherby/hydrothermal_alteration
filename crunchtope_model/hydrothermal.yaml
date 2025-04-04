@@ -1,8 +1,9 @@
 # template can either be specified as either the relative or absolute path to the inputs.
 template: 'hydrothermal.in'
-database: 'CrunchThermoddem.dbs'
+database: 'thermo_500bars.dat'
 aqueous_database:
 catabolic_pathways:
+restart_file: ''
 
 # Timeout in seconds for any one input file.
 timeout: 734400
@@ -11,7 +12,7 @@ conditions:
     - 'Boundary'
     - 'Initial'
 # Number of files in this run.
-number_of_files: 29
+number_of_files: 20
 
 nodes: 29
 

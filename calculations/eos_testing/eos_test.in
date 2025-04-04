@@ -38,8 +38,8 @@ END
 
 #=========================== Equation of state =================================
 EOS WATER
-  DENSITY PLANAR
-  ENTHALPY DEFAULT
+  DENSITY IF97
+  ENTHALPY IF97
   TEST 0 1000.d0 1 1.d8 100 100 uniform uniform
 END
 
