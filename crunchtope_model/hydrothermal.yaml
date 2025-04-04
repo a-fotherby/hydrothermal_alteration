@@ -6,7 +6,7 @@ catabolic_pathways:
 restart_file: ''
 
 # Timeout in seconds for any one input file.
-timeout: 734400
+timeout: 73440000
 # conditions must match geochemical condition names in concentration dict
 conditions:
     - 'Boundary'

@@ -1,7 +1,7 @@
 # Axes
 axes.titlesize   : 16        # Title font size
 axes.titleweight : bold      # Bold title
-axes.labelsize   : medium        # X and Y label font size
+axes.labelsize   : 16        # X and Y label font size
 axes.labelweight : bold      # Bold label
 
 # Lines
@@ -9,8 +9,8 @@ lines.linewidth  : 2.5       # Bold lines
 lines.markersize : 8         # Larger markers for visibility
 
 # Ticks
-xtick.labelsize  : 12        # X-tick font size
-ytick.labelsize  : 12        # Y-tick font size
+xtick.labelsize  : 16        # X-tick font size
+ytick.labelsize  : 16        # Y-tick font size
 xtick.major.width: 1.5       # Bold X-tick marks
 ytick.major.width: 1.5       # Bold Y-tick marks
 
@@ -42,4 +42,3 @@ savefig.format   : pdf       # Default save format
 savefig.bbox     : tight     # Fit tightly around the figure to minimize white space
 
 axes.prop_cycle: cycler('color', ['FF9999', '66B2FF', '99FF99', 'FFCC99', 'FFD700', 'FF69B4', 'B2B2FF', 'FFB347', '77DD77', 'FF6347', '40E0D0', 'F49AC2'])
-
