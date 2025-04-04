@@ -68,7 +68,7 @@ def sum_variables(xarray_obj, var_names, new_var_name):
 def mineral_groups():
     primary_minerals = ['Anorthite', 'Albite', 'Diopside', 'Hedenbergite', 'Forsterite', 'Fayalite']
     secondary_minerals = ['Tremolite', 'Prehnite', 'Talc', 'Quartz', 'Saponite_Mg', 
-                        'Epidote', 'Zoisite', 'Chamosite', 'Clinochlore', 'Analcime', 
+                         'Zoisite', 'Chamosite', 'Clinochlore', 'Analcime', 
                         'Anhydrite', 'Calcite', 'Annite']
 
     clays = ['Saponite_Mg', 'Chamosite', 'Clinochlore']
@@ -77,7 +77,7 @@ def mineral_groups():
     inosilicates = ['Prehnite']
     talc = ['Talc']
     mica = ['Annite']
-    epidotes = ['Epidote', 'Zoisite']
+    epidotes = ['Zoisite']
     olivine = ['Forsterite', 'Fayalite']
     clinopyroxenes = ['Diopside', 'Hedenbergite']
     plagioclases = ['Anorthite', 'Albite']
