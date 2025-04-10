@@ -1,7 +1,7 @@
 # Axes
 axes.titlesize   : 16        # Title font size
 axes.titleweight : bold      # Bold title
-axes.labelsize   : 16        # X and Y label font size
+axes.labelsize   : 20        # X and Y label font size
 axes.labelweight : bold      # Bold label
 
 # Lines
